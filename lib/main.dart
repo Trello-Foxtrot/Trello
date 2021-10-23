@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -48,17 +49,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String resp = "";
+  String send = "";
 
-  void _incrementCounter() {
+  void _sendMsg() async {
+    final res = await http.get(
+      Uri.parse('http://127.0.0.1:8000/' + send),
+    );
     setState(() {
+      resp=res.body;
+    });
+
+
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
-    });
   }
 
   @override
@@ -95,19 +102,25 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+              TextField(
+              onChanged: (value) {
+                send=value;
+      },
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+              hintText: 'Enter a search term',
+                ),
+              ),
             Text(
-              '$_counter',
+              resp,
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: _sendMsg,
+        tooltip: 'send',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
