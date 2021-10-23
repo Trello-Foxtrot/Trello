@@ -2,15 +2,29 @@
 
 trello
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Create lists on boards
+- create rules and actions for cards
+- Calendar and due date commands
+- Automations for email and integrations
+- Members and guests permissions
+- Setting board permissions
+- Various sorting options, such as by recently active members, most members or alphabetically
+- 
+- Easy Upload (Local Devices, Dropbox, Google Drive, and Box
+- Data Filters
+- Automated Email Notifications
+- Individual/Group Task Assignment
+- Mobile-Friendly Views
+- Voting Options
+- Easy Organization with Labeling, Tags, and Comments
+- File Attachment up to 250 MB
+- Ability to view in dashboards, timeline, map and calendar
+- 
+- Emoji Reactions
+- Stickers
+- Confetti Celebrations
+- Mark as Done
+- Card separator
+- Shortcuts
