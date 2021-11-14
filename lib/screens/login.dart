@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trello/screens/sign_up.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'home_screen.dart';
 
@@ -12,6 +14,32 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String email="";
+  String password="";
+
+  Map<String, dynamic> toJson() => {
+    'email': email,
+    'password': password,
+  };
+
+  void loginUser() {
+    Future<http.Response> response = http.post(
+      Uri.parse('https://localhost/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(this),
+    );
+    Map<String, String> resData = jsonDecode(response.toString());
+
+    if (resData['email']!.isEmpty && resData['password']!.isEmpty) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +54,9 @@ class _LoginState extends State<Login> {
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
+      onChanged: (text) {
+        this.email = text;
+      },
     );
 
     final password = TextFormField(
@@ -36,6 +67,9 @@ class _LoginState extends State<Login> {
         hintText: 'Password',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
+      onChanged: (text) {
+        this.password = text;
+      },
     );
 
     final loginButton = Container(
@@ -43,10 +77,7 @@ class _LoginState extends State<Login> {
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+          loginUser();
         },
         // padding: EdgeInsets.all(12),
         // color: Colors.blue,
