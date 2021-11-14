@@ -50,6 +50,10 @@ class _LoginState extends State<Login> {
         },
         // padding: EdgeInsets.all(12),
         // color: Colors.blue,
+        style: ElevatedButton.styleFrom(
+          primary: Colors.lightBlue.shade800, // background
+          // foreground
+        ),
         child: const Text('Log In',
             style: TextStyle(
                 fontSize: 16,
@@ -69,7 +73,11 @@ class _LoginState extends State<Login> {
           );
         },
         // padding: EdgeInsets.all(12),
-        // color: Colors.blue,
+        style: ElevatedButton.styleFrom(
+          primary: Colors.lightBlue.shade800, // background
+          // foreground
+        ),
+
         child: const Align(
           alignment: Alignment.center,
           child: Text('Sign up',
@@ -88,7 +96,7 @@ class _LoginState extends State<Login> {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: Colors.lightBlueAccent,
+            color: Colors.lightBlue.shade50,
           ),
           // Column(
           //   children: <Widget>[

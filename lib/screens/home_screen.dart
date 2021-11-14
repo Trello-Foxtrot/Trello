@@ -40,7 +40,8 @@ class HomeScreenState extends State<HomeScreen>
         title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(child: IconButton(
+              Container(
+                  child: IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -67,7 +68,8 @@ class HomeScreenState extends State<HomeScreen>
             ]),
         actions: <Widget>[
           SizedBox(width: 32),
-          Container(child: IconButton(
+          Container(
+              child: IconButton(
             padding: EdgeInsets.all(0),
             icon: Icon(Icons.account_circle),
             onPressed: () {

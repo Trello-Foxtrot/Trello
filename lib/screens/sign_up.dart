@@ -48,6 +48,10 @@ class _SignUpState extends State<SignUp> {
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.lightBlue.shade800, // background
+          // foreground
+        ),
         // padding: EdgeInsets.all(12),
         // color: Colors.blue,
         child: const Text('Sign Up',
@@ -68,6 +72,10 @@ class _SignUpState extends State<SignUp> {
             MaterialPageRoute(builder: (context) => Login()),
           );
         },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.lightBlue.shade800, // background
+          // foreground
+        ),
         // padding: EdgeInsets.all(12),
         // color: Colors.blue,
         child: const Align(
@@ -88,7 +96,7 @@ class _SignUpState extends State<SignUp> {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: Colors.lightBlueAccent,
+            color: Colors.lightBlue.shade50,
           ),
           Center(
             child: Card(
