@@ -23,21 +23,21 @@ class _LoginState extends State<Login> {
   };
 
   void loginUser() {
-    Future<http.Response> response = http.post(
-      Uri.parse('https://localhost/login'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+    http.post(
+      Uri.parse('http://localhost:8000/login'),
       body: jsonEncode(this),
-    );
-    Map<String, String> resData = jsonDecode(response.toString());
+    ).then((response) {
+      print(response.body);
+      Map<String, dynamic> resData = jsonDecode(response.body);
 
-    if (resData['email']!.isEmpty && resData['password']!.isEmpty) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    }
+      if (resData['email']!.isEmpty && resData['password']!.isEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      }
+      return response;
+    });
   }
 
   @override
