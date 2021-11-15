@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trello/screens/sign_up.dart';
@@ -27,7 +25,7 @@ class _LoginState extends State<Login> {
       Uri.parse('http://localhost:8000/trello/login'),
       body: map,
     ).then((response) {
-      Map<String, dynamic> map = jsonDecode(response.body);
+      Map<String, dynamic> map = response.headers;
       if (map['email']!.isEmpty) {
         Navigator.push(
           context,

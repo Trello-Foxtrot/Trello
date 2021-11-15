@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,12 +25,12 @@ class _SignUpState extends State<SignUp> {
       Uri.parse('http://localhost:8000/trello/sign_up'),
       body: map,
     ).then((response) {
-      Map<String, dynamic> map = jsonDecode(response.body);
+      Map<String, dynamic> map = response.headers;
       if (map['email']!.isEmpty) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
       }
       return response;
     });
