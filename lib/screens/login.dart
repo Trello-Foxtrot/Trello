@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trello/screens/sign_up.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'home_screen.dart';
 
@@ -17,20 +18,17 @@ class _LoginState extends State<Login> {
   String email="";
   String password="";
 
-  Map<String, dynamic> toJson() => {
-    'email': email,
-    'password': password,
-  };
-
   void loginUser() {
-    http.post(
-      Uri.parse('http://localhost:8000/login'),
-      body: jsonEncode(this),
-    ).then((response) {
-      print(response.body);
-      Map<String, dynamic> resData = jsonDecode(response.body);
+    Map<String, dynamic> map = new Map<String, dynamic>();
+    map['email']=email;
+    map['password']=password;
 
-      if (resData['email']!.isEmpty && resData['password']!.isEmpty) {
+    http.post(
+      Uri.parse('http://localhost:8000/trello/login'),
+      body: map,
+    ).then((response) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      if (map['email']!.isEmpty) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),

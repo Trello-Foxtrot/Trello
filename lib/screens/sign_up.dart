@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
 import 'home_screen.dart';
 import 'login.dart';
 
@@ -12,6 +15,29 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String email = "";
+  String password = "";
+
+  void signUpUser() {
+    Map<String, dynamic> map = new Map<String, dynamic>();
+    map['email']=email;
+    map['password']=password;
+
+    http.post(
+      Uri.parse('http://localhost:8000/trello/sign_up'),
+      body: map,
+    ).then((response) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      if (map['email']!.isEmpty) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+      }
+      return response;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +52,9 @@ class _SignUpState extends State<SignUp> {
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
+      onChanged: (text) {
+        this.email = text;
+      },
     );
 
     final password = TextFormField(
@@ -36,6 +65,9 @@ class _SignUpState extends State<SignUp> {
         hintText: 'Password',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
+      onChanged: (text) {
+        this.password = text;
+      },
     );
 
     final sighupButton = Container(
@@ -43,10 +75,7 @@ class _SignUpState extends State<SignUp> {
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-          );
+          signUpUser();
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.lightBlue.shade800, // background
