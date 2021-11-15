@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trello/screens/workspaces_page.dart';
 
+import 'boards_page.dart';
 import 'login.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -109,20 +111,23 @@ class HomeScreenState extends State<HomeScreen>
                       color: Colors.white,
                       child: listDrawerItems(false)),
                 ),
-          // Container(
-          //   width: MediaQuery.of(context).size.width < 1300
-          //       ? MediaQuery.of(context).size.width
-          //       : MediaQuery.of(context).size.width - 310,
-          //   child: TabBarView(
-          //     physics: NeverScrollableScrollPhysics(),
-          //     controller: tabController,
-          //     children: [
-          //       Dashboard(),
-          //       FormMaterial(),
-          //       //HeroAnimation(),
-          //     ],
-          //   ),
-          // )
+          Container(
+            width: MediaQuery.of(context).size.width < 800
+                ? MediaQuery.of(context).size.width
+                : MediaQuery.of(context).size.width - 310,
+            child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: [
+                BoardsPage(),
+                BoardsPage(),
+                // TemplatesPage(),
+                WorkspacesPage(),
+                //FormMaterial(),
+                //HeroAnimation(),
+              ],
+            ),
+          )
         ],
       ),
       drawer: Padding(
@@ -134,39 +139,12 @@ class HomeScreenState extends State<HomeScreen>
   Widget listDrawerItems(bool drawerStatus) {
     return ListView(
       children: <Widget>[
+
         FlatButton(
           color: tabController.index == 0 ? Colors.grey[100] : Colors.white,
-          //color: Colors.grey[100],
-          onPressed: () {
-            tabController.animateTo(0);
-            drawerStatus ? Navigator.pop(context) : print("");
-          },
-
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: const EdgeInsets.only(top: 22, bottom: 22, right: 22),
-              child: Row(children: const [
-                Icon(Icons.grid_view_outlined),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "Workspaces",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'HelveticaNeue',
-                  ),
-                ),
-              ]),
-            ),
-          ),
-        ),
-        FlatButton(
-          color: tabController.index == 1 ? Colors.grey[100] : Colors.white,
           onPressed: () {
             print(tabController.index);
-            tabController.animateTo(1);
+            tabController.animateTo(0);
             drawerStatus ? Navigator.pop(context) : print("");
           },
           child: Align(
@@ -190,9 +168,9 @@ class HomeScreenState extends State<HomeScreen>
           ),
         ),
         FlatButton(
-          color: tabController.index == 2 ? Colors.grey[100] : Colors.white,
+          color: tabController.index == 1 ? Colors.grey[100] : Colors.white,
           onPressed: () {
-            tabController.animateTo(2);
+            tabController.animateTo(1);
             drawerStatus ? Navigator.pop(context) : print("");
           },
           child: Align(
@@ -206,6 +184,34 @@ class HomeScreenState extends State<HomeScreen>
                 ),
                 Text(
                   "Templates",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'HelveticaNeue',
+                  ),
+                ),
+              ]),
+            ),
+          ),
+        ),
+        FlatButton(
+          color: tabController.index == 2 ? Colors.grey[100] : Colors.white,
+          //color: Colors.grey[100],
+          onPressed: () {
+            tabController.animateTo(2);
+            drawerStatus ? Navigator.pop(context) : print("");
+          },
+
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.only(top: 22, bottom: 22, right: 22),
+              child: Row(children: const [
+                Icon(Icons.grid_view_outlined),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  "Workspaces",
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'HelveticaNeue',
