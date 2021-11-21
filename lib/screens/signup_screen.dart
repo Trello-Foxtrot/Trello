@@ -1,35 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:trello/screens/sign_up.dart';
 import 'package:http/http.dart' as http;
+import 'package:trello/utils/colors.dart';
 
-import 'home_screen.dart';
+import 'login_screen.dart';
+import 'main_screen.dart';
 
-class Login extends StatefulWidget {
+class SignUp extends StatefulWidget {
   // Login({ required Key key,  required this.title}) : super(key: key);
   // final String title;
   @override
-  _LoginState createState() => _LoginState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
-  String email="";
-  String password="";
+class _SignUpState extends State<SignUp> {
+  String email = "";
+  String password = "";
 
-  void loginUser() {
+  void signUpUser() {
     Map<String, dynamic> map = new Map<String, dynamic>();
-    map['email']=email;
-    map['password']=password;
+    map['email'] = email;
+    map['password'] = password;
 
-    http.post(
-      Uri.parse('http://localhost:8000/trello/login'),
+    http
+        .post(
+      Uri.parse('http://localhost:8000/trello/sign_up'),
       body: map,
-    ).then((response) {
+    )
+        .then((response) {
       Map<String, dynamic> map = response.headers;
       if (map['email']!.isEmpty) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => MainScreen()),
         );
       }
       return response;
@@ -68,20 +71,16 @@ class _LoginState extends State<Login> {
       },
     );
 
-    final loginButton = Container(
+    final sighupButton = Container(
       constraints: BoxConstraints(minWidth: 150, maxWidth: 200, minHeight: 40),
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
-          loginUser();
+          signUpUser();
         },
-        // padding: EdgeInsets.all(12),
-        // color: Colors.blue,
-        style: ElevatedButton.styleFrom(
-          primary: Colors.lightBlue.shade800, // background
-          // foreground
-        ),
-        child: const Text('Log In',
+        style:
+            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
+        child: const Text('Sign Up',
             style: TextStyle(
                 fontSize: 16,
                 color: Colors.white,
@@ -89,25 +88,21 @@ class _LoginState extends State<Login> {
       ),
     );
 
-    final sighupButton = Container(
+    final loginButton = Container(
       constraints: const BoxConstraints(minWidth: 50, maxWidth: 80),
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUp()),
+            MaterialPageRoute(builder: (context) => Login()),
           );
         },
-        // padding: EdgeInsets.all(12),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.lightBlue.shade800, // background
-          // foreground
-        ),
-
+        style:
+            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
         child: const Align(
           alignment: Alignment.center,
-          child: Text('Sign up',
+          child: Text('Log in',
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,
@@ -125,29 +120,18 @@ class _LoginState extends State<Login> {
             width: MediaQuery.of(context).size.width,
             color: Colors.lightBlue.shade50,
           ),
-          // Column(
-          //   children: <Widget>[
-          //     Container(
-          //       height: MediaQuery.of(context).size.height / 2,
-          //       width: MediaQuery.of(context).size.width,
-          //       color: Colors.white,
-          //     ),
-          //     Container(
-          //       height: MediaQuery.of(context).size.height / 2,
-          //       width: MediaQuery.of(context).size.width,
-          //       color: Colors.blue,
-          //     ),
-          //   ],
-          // ),
           Center(
             child: Card(
               elevation: 1.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
               child: Container(
                 constraints: const BoxConstraints(
                     minWidth: 300,
                     maxWidth: 400,
                     minHeight: 520,
-                    maxHeight: 530),
+                    maxHeight: 600),
                 padding: const EdgeInsets.all(25),
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: MediaQuery.of(context).size.height / 1.5,
@@ -165,7 +149,7 @@ class _LoginState extends State<Login> {
                     const SizedBox(height: 20.0),
                     const Center(
                         child: Text(
-                      "Login",
+                      "Signup For Free",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -175,18 +159,18 @@ class _LoginState extends State<Login> {
                     email,
                     const SizedBox(height: 8.0),
                     password,
+                    const SizedBox(height: 8.0),
+                    password,
                     const SizedBox(height: 40.0),
-                    loginButton,
-                    const SizedBox(height: 60.0),
+                    sighupButton,
+                    const SizedBox(height: 50.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
-                          children: const <Widget>[
-                            Text("Don't have an account?")
-                          ],
+                          children: const <Widget>[Text("Already a member?")],
                         ),
-                        sighupButton,
+                        loginButton,
                       ],
                     ),
                   ],

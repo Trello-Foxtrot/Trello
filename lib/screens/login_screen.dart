@@ -1,35 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
-import 'home_screen.dart';
-import 'login.dart';
+import 'package:trello/screens/signup_screen.dart';
+import 'package:trello/utils/colors.dart';
 
-class SignUp extends StatefulWidget {
+import 'main_screen.dart';
+
+class Login extends StatefulWidget {
   // Login({ required Key key,  required this.title}) : super(key: key);
   // final String title;
   @override
-  _SignUpState createState() => _SignUpState();
+  _LoginState createState() => _LoginState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginState extends State<Login> {
   String email = "";
   String password = "";
 
-  void signUpUser() {
+  void loginUser() {
     Map<String, dynamic> map = new Map<String, dynamic>();
-    map['email']=email;
-    map['password']=password;
+    map['email'] = email;
+    map['password'] = password;
 
-    http.post(
-      Uri.parse('http://localhost:8000/trello/sign_up'),
+    http
+        .post(
+      Uri.parse('http://localhost:8000/trello/login'),
       body: map,
-    ).then((response) {
+    )
+        .then((response) {
       Map<String, dynamic> map = response.headers;
       if (map['email']!.isEmpty) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => MainScreen()),
         );
       }
       return response;
@@ -68,20 +71,20 @@ class _SignUpState extends State<SignUp> {
       },
     );
 
-    final sighupButton = Container(
+    final loginButton = Container(
       constraints: BoxConstraints(minWidth: 150, maxWidth: 200, minHeight: 40),
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
-          signUpUser();
+          loginUser();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => MainScreen()),
+          // );
         },
-        style: ElevatedButton.styleFrom(
-          primary: Colors.lightBlue.shade800, // background
-          // foreground
-        ),
-        // padding: EdgeInsets.all(12),
-        // color: Colors.blue,
-        child: const Text('Sign Up',
+        style:
+            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
+        child: const Text('Log In',
             style: TextStyle(
                 fontSize: 16,
                 color: Colors.white,
@@ -89,25 +92,21 @@ class _SignUpState extends State<SignUp> {
       ),
     );
 
-    final loginButton = Container(
+    final sighupButton = Container(
       constraints: const BoxConstraints(minWidth: 50, maxWidth: 80),
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Login()),
+            MaterialPageRoute(builder: (context) => SignUp()),
           );
         },
-        style: ElevatedButton.styleFrom(
-          primary: Colors.lightBlue.shade800, // background
-          // foreground
-        ),
-        // padding: EdgeInsets.all(12),
-        // color: Colors.blue,
+        style:
+            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
         child: const Align(
           alignment: Alignment.center,
-          child: Text('Log in',
+          child: Text('Sign up',
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,
@@ -128,12 +127,15 @@ class _SignUpState extends State<SignUp> {
           Center(
             child: Card(
               elevation: 1.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
               child: Container(
                 constraints: const BoxConstraints(
                     minWidth: 300,
                     maxWidth: 400,
                     minHeight: 520,
-                    maxHeight: 600),
+                    maxHeight: 530),
                 padding: const EdgeInsets.all(25),
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: MediaQuery.of(context).size.height / 1.5,
@@ -151,7 +153,7 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(height: 20.0),
                     const Center(
                         child: Text(
-                      "Signup For Free",
+                      "Login",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -161,18 +163,18 @@ class _SignUpState extends State<SignUp> {
                     email,
                     const SizedBox(height: 8.0),
                     password,
-                    const SizedBox(height: 8.0),
-                    password,
                     const SizedBox(height: 40.0),
-                    sighupButton,
-                    const SizedBox(height: 50.0),
+                    loginButton,
+                    const SizedBox(height: 60.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
-                          children: const <Widget>[Text("Already a member?")],
+                          children: const <Widget>[
+                            Text("Don't have an account?")
+                          ],
                         ),
-                        loginButton,
+                        sighupButton,
                       ],
                     ),
                   ],
