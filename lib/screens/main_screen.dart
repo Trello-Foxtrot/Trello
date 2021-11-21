@@ -39,17 +39,17 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             width: 30,
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.login,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(
-            width: 30,
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(
+          //     Icons.login,
+          //     size: 30,
+          //     color: Colors.white,
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 30,
+          // ),
         ],
       ),
       body: Padding(
@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               Wrap(
                 spacing: 30, // gap between adjacent chips
-                runSpacing: 35,
+                runSpacing: 40,
                 // child: Spacer
                 children: myWorkSpacesList.isEmpty
                     ? List.generate(
