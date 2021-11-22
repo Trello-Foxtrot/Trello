@@ -16,8 +16,32 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   String email = "";
   String password = "";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _login = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   void loginUser() {
+    //
+    // IF USER DOES NOT EXIST --------------------------------------------------
+    //
+    // snackBar = SnackBar(
+    //   content:
+    //   Text('Email or password is incorrect'),
+    //   backgroundColor: Colors.red,
+    // );
+    // ScaffoldMessenger.of(context)
+    //     .showSnackBar(snackBar);
+    //
+    // IF USER EXIST --------------------------------------------------
+    //
+    // snackBar2 = SnackBar(
+    //   content:
+    //   Text('Login success'),
+    //   backgroundColor: Colors.green,
+    // );
+    // ScaffoldMessenger.of(context)
+    //     .showSnackBar(snackBar2);
+
     Map<String, dynamic> map = new Map<String, dynamic>();
     map['email'] = email;
     map['password'] = password;
@@ -46,52 +70,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      decoration: const InputDecoration(
-        hintText: 'Email',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      ),
-      onChanged: (text) {
-        this.email = text;
-      },
-    );
-
-    final password = TextFormField(
-      autofocus: false,
-      initialValue: '',
-      obscureText: true,
-      decoration: const InputDecoration(
-        hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      ),
-      onChanged: (text) {
-        this.password = text;
-      },
-    );
-
-    final loginButton = Container(
-      constraints: BoxConstraints(minWidth: 150, maxWidth: 200, minHeight: 40),
-      width: MediaQuery.of(context).size.width / 2.5,
-      child: ElevatedButton(
-        onPressed: () {
-          loginUser();
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => MainScreen()),
-          // );
-        },
-        style:
-            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
-        child: const Text('Log In',
-            style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.bold)),
-      ),
-    );
-
     final sighupButton = Container(
       constraints: const BoxConstraints(minWidth: 50, maxWidth: 80),
       width: MediaQuery.of(context).size.width / 2.5,
@@ -135,49 +113,114 @@ class _LoginState extends State<Login> {
                     minWidth: 300,
                     maxWidth: 400,
                     minHeight: 520,
-                    maxHeight: 530),
+                    maxHeight: 540),
                 padding: const EdgeInsets.all(25),
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: MediaQuery.of(context).size.height / 1.5,
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 62.0),
-                    const Center(
-                        child: Text(
-                      "Trello",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                    const SizedBox(height: 20.0),
-                    const Center(
-                        child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                    const SizedBox(height: 30.0),
-                    email,
-                    const SizedBox(height: 8.0),
-                    password,
-                    const SizedBox(height: 40.0),
-                    loginButton,
-                    const SizedBox(height: 60.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: const <Widget>[
-                            Text("Don't have an account?")
-                          ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(height: 62.0),
+                      const Center(
+                          child: Text(
+                        "Trello",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
                         ),
-                        sighupButton,
-                      ],
-                    ),
-                  ],
+                      )),
+                      const SizedBox(height: 20.0),
+                      const Center(
+                          child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                      const SizedBox(height: 30.0),
+                      // EMAIL TEXT FIELD -------------------------------------
+                      TextFormField(
+                        controller: _login,
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: false,
+                        decoration: const InputDecoration(
+                          hintText: 'Email',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        ),
+                        onChanged: (text) {
+                          this.email = text;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter an email';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 8.0),
+                      // PASSWORD TEXT FIELD ----------------------------------
+                      TextFormField(
+                        controller: _password,
+                        autofocus: false,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Password',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        ),
+                        onChanged: (text) {
+                          this.password = text;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a password';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 40.0),
+                      // LOG IN BUTTON ---------------------------------------
+                      Container(
+                        constraints: const BoxConstraints(
+                            minWidth: 150, maxWidth: 200, minHeight: 40),
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              loginUser();
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => MainScreen()),
+                              // );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: darkBlue, shape: StadiumBorder()),
+                          child: const Text('Log In',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                      const SizedBox(height: 60.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: const <Widget>[
+                              Text("Don't have an account?")
+                            ],
+                          ),
+                          sighupButton,
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
