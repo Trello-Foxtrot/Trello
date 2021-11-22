@@ -16,6 +16,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String email = "";
   String password = "";
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final TextEditingController _pass = TextEditingController();
+  final TextEditingController _confirmPass = TextEditingController();
 
   void signUpUser() {
     Map<String, dynamic> map = new Map<String, dynamic>();
@@ -56,18 +59,11 @@ class _SignUpState extends State<SignUp> {
       onChanged: (text) {
         this.email = text;
       },
-    );
-
-    final password = TextFormField(
-      autofocus: false,
-      initialValue: '',
-      obscureText: true,
-      decoration: const InputDecoration(
-        hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      ),
-      onChanged: (text) {
-        this.password = text;
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter an email';
+        }
+        return null;
       },
     );
 
@@ -76,7 +72,13 @@ class _SignUpState extends State<SignUp> {
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
-          signUpUser();
+          if (_form.currentState!.validate()) {
+            signUpUser();
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => MainScreen()),
+            // );
+          }
         },
         style:
             ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
@@ -130,50 +132,95 @@ class _SignUpState extends State<SignUp> {
                 constraints: const BoxConstraints(
                     minWidth: 300,
                     maxWidth: 400,
-                    minHeight: 520,
+                    minHeight: 550,
                     maxHeight: 600),
                 padding: const EdgeInsets.all(25),
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: MediaQuery.of(context).size.height / 1.5,
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(height: 62.0),
-                    const Center(
-                        child: Text(
-                      "Trello",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                    const SizedBox(height: 20.0),
-                    const Center(
-                        child: Text(
-                      "Signup For Free",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                    const SizedBox(height: 30.0),
-                    email,
-                    const SizedBox(height: 8.0),
-                    password,
-                    const SizedBox(height: 8.0),
-                    password,
-                    const SizedBox(height: 40.0),
-                    sighupButton,
-                    const SizedBox(height: 50.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: const <Widget>[Text("Already a member?")],
+                child: Form(
+                  key: _form,
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(height: 62.0),
+                      const Center(
+                          child: Text(
+                        "Trello",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
                         ),
-                        loginButton,
-                      ],
-                    ),
-                  ],
+                      )),
+                      const SizedBox(height: 20.0),
+                      const Center(
+                          child: Text(
+                        "Signup For Free",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                      const SizedBox(height: 30.0),
+                      email,
+                      const SizedBox(height: 8.0),
+                      // PASSWORD 1   ----------------------------------
+                      TextFormField(
+                        controller: _pass,
+                        autofocus: false,
+                        //initialValue: '',
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Password',
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        ),
+                        onChanged: (text) {
+                          this.password = text;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a password';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 8.0),
+                      // PASSWORD 2   ----------------------------------
+                      TextFormField(
+                          controller: _confirmPass,
+                          autofocus: false,
+                          //initialValue: '',
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Password',
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          ),
+                          onChanged: (text) {
+                            this.password = text;
+                          },
+                          validator: (val) {
+                            if (val!.isEmpty) {
+                              return 'Please enter a password';
+                            }
+                            if (_confirmPass.text != _pass.text) {
+                              return "Password does not match";
+                            }
+                            return null;
+                          }),
+                      const SizedBox(height: 40.0),
+                      sighupButton,
+                      const SizedBox(height: 50.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: const <Widget>[Text("Already a member?")],
+                          ),
+                          loginButton,
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
