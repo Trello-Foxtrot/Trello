@@ -4,6 +4,13 @@ import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/main_screen.dart';
 
 class CreateWorkSpaceDialog extends StatelessWidget {
+  final snackBar = const SnackBar(
+    content: Text("Workspace's name is empty"),
+    backgroundColor: Colors.red,
+  );
+
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -44,6 +51,7 @@ class CreateWorkSpaceDialog extends StatelessWidget {
                 ),
               ),
               TextFormField(
+                controller: controller,
                 keyboardType: TextInputType.name,
                 autofocus: false,
                 decoration: const InputDecoration(
@@ -62,10 +70,21 @@ class CreateWorkSpaceDialog extends StatelessWidget {
                   DialogBlueButton(
                     text: "Create",
                     onClick: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainScreen()),
-                      );
+                      if (controller.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        final snackBarSuccess = SnackBar(
+                          content:
+                              Text('Workspace "${controller.text}" is added'),
+                          backgroundColor: Colors.green,
+                        );
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(snackBarSuccess);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
+                        );
+                      }
                     },
                   ),
                 ],
