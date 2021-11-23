@@ -71,7 +71,6 @@ class _MainScreenState extends State<MainScreen> {
               Wrap(
                 spacing: 30, // gap between adjacent chips
                 runSpacing: 40,
-                // child: Spacer
                 children: myWorkSpacesList.isEmpty
                     ? List.generate(
                         1,

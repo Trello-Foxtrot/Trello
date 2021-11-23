@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trello/screens/tabs/boards_tab.dart';
+import 'package:trello/screens/tabs/members_tab.dart';
+import 'package:trello/screens/tabs/settings_tab.dart';
 import 'package:trello/utils/colors.dart';
 
 class WorkspaceScreen extends StatefulWidget {
@@ -112,13 +115,13 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
               ],
             ),
           ),
-          // Expanded(child:   selectedTab == 1
-          //     ? BoardsTab()
-          //     : selectedTab == 2
-          //     ? MembersTab()
-          //     : selectedTab == 3
-          //     ? SettingsTab()
-          //     : BoardsTab()),
+          Expanded(child:   selectedTab == 1
+              ? BoardsTab()
+              : selectedTab == 2
+              ? MembersTab()
+              : selectedTab == 3
+              ? SettingsTab()
+              : BoardsTab()),
         ],
       ),
     );
