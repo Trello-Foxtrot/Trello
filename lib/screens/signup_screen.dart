@@ -14,16 +14,15 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  String email = "";
-  String password = "";
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
   void signUpUser() {
     Map<String, dynamic> map = new Map<String, dynamic>();
-    map['email'] = email;
-    map['password'] = password;
+    map['email'] = _email.text;
+    map['password'] = _pass.text;
 
     http
         .post(
@@ -38,7 +37,7 @@ class _SignUpState extends State<SignUp> {
           MaterialPageRoute(builder: (context) => MainScreen()),
         );
       }
-      return response;
+      return null;
     });
   }
 
@@ -50,15 +49,13 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     final email = TextFormField(
+      controller: _email,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       decoration: const InputDecoration(
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
       ),
-      onChanged: (text) {
-        this.email = text;
-      },
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter an email';
@@ -173,9 +170,6 @@ class _SignUpState extends State<SignUp> {
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
-                        onChanged: (text) {
-                          this.password = text;
-                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter a password';
@@ -195,9 +189,6 @@ class _SignUpState extends State<SignUp> {
                             contentPadding:
                                 EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                           ),
-                          onChanged: (text) {
-                            this.password = text;
-                          },
                           validator: (val) {
                             if (val!.isEmpty) {
                               return 'Please enter a password';
