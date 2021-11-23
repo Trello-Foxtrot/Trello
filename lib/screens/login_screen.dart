@@ -57,6 +57,15 @@ class _LoginState extends State<Login> {
           MaterialPageRoute(builder: (context) => MainScreen()),
         );
       }
+      else {
+        SnackBar snackBar = SnackBar(
+           content:
+           Text(map['email']),
+           backgroundColor: Colors.red,
+         );
+         ScaffoldMessenger.of(context)
+             .showSnackBar(snackBar);
+      }
       return response;
     });
   }

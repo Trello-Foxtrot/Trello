@@ -16,6 +16,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
+  String _emailErr = "";
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
@@ -36,6 +37,9 @@ class _SignUpState extends State<SignUp> {
           context,
           MaterialPageRoute(builder: (context) => MainScreen()),
         );
+      }
+      else {
+        _emailErr = map['email'];
       }
       return null;
     });
@@ -60,6 +64,9 @@ class _SignUpState extends State<SignUp> {
         if (value!.isEmpty) {
           return 'Please enter an email';
         }
+        if (_emailErr.isNotEmpty) {
+          return _emailErr;
+        }
         return null;
       },
     );
@@ -69,8 +76,10 @@ class _SignUpState extends State<SignUp> {
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
+          _emailErr = "";
           if (_form.currentState!.validate()) {
             signUpUser();
+            _form.currentState!.validate();
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(builder: (context) => MainScreen()),
