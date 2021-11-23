@@ -14,8 +14,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email = "";
-  String password = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _login = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -43,8 +41,8 @@ class _LoginState extends State<Login> {
     //     .showSnackBar(snackBar2);
 
     Map<String, dynamic> map = new Map<String, dynamic>();
-    map['email'] = email;
-    map['password'] = password;
+    map['email'] = _login.text;
+    map['password'] = _password.text;
 
     http
         .post(
@@ -150,9 +148,6 @@ class _LoginState extends State<Login> {
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
-                        onChanged: (text) {
-                          this.email = text;
-                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter an email';
@@ -171,9 +166,6 @@ class _LoginState extends State<Login> {
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
-                        onChanged: (text) {
-                          this.password = text;
-                        },
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter a password';
