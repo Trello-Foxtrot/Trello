@@ -4,6 +4,7 @@ import 'package:trello/buttons/board_button.dart';
 import 'package:trello/popups/create_workspace_popup.dart';
 import 'package:trello/screens/workspace_screen.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:http/http.dart' as http;
 
 class MainScreen extends StatefulWidget {
   @override
@@ -11,10 +12,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<String> myWorkSpacesList = ["Work", "Hobby", "Kids", "PL"];
-  List<String> guestWorkspace = [
-    "ISA",
-  ];
+  List<String> myWorkSpacesList = [];
+  List<String> guestWorkspace = [];
+
+  void updateWorkspacesLists() {
+    http.post(
+      Uri.parse('http://localhost:8000/trello/workspace')
+    ).then((response) {
+      Map<String, dynamic> map = response.headers;
+      myWorkSpacesList = map['admin'];
+      guestWorkspace = map['guest'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
