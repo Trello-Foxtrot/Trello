@@ -29,8 +29,7 @@ class _SignUpState extends State<SignUp> {
         .post(
       Uri.parse('http://localhost:8000/trello/sign_up'),
       body: map,
-    )
-        .then((response) {
+    ).then((response) {
       Map<String, dynamic> map = response.headers;
       if (map['email']!.isEmpty) {
         Navigator.push(
@@ -40,6 +39,8 @@ class _SignUpState extends State<SignUp> {
       }
       else {
         _emailErr = map['email'];
+        _form.currentState!.validate();
+        _emailErr = "";
       }
       return null;
     });
@@ -76,10 +77,8 @@ class _SignUpState extends State<SignUp> {
       width: MediaQuery.of(context).size.width / 2.5,
       child: ElevatedButton(
         onPressed: () {
-          _emailErr = "";
           if (_form.currentState!.validate()) {
             signUpUser();
-            _form.currentState!.validate();
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(builder: (context) => MainScreen()),
