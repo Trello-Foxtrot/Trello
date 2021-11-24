@@ -4,12 +4,7 @@ import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/workspace_screen.dart';
 
 class RenameWorkspaceDialog extends StatelessWidget {
-  final snackBar = const SnackBar(
-    content: Text("Workspace's new name is empty"),
-    backgroundColor: Colors.red,
-  );
-
-  TextEditingController controller = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,61 +31,60 @@ class RenameWorkspaceDialog extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 40),
-                child: Text(
-                  "Change a Workspace name",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w700,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.only(top: 40),
+                  child: Text(
+                    "Change a Workspace name",
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
-              TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.name,
-                autofocus: false,
-                decoration: const InputDecoration(
-                  hintText: 'Title',
-                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                TextFormField(
+                  keyboardType: TextInputType.name,
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    hintText: 'Title',
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a title';
+                    }
+                    return null;
+                  },
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CancelButton(
-                    onClick: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  DialogBlueButton(
-                    text: "Change",
-                    onClick: () {
-                      if (controller.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } else {
-                        final snackBarSuccess = SnackBar(
-                          content: Text(
-                              'Workspace name is changed to "${controller.text}"'),
-                          backgroundColor: Colors.green,
-                        );
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(snackBarSuccess);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WorkspaceScreen()),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CancelButton(
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    DialogBlueButton(
+                      text: "Change",
+                      onClick: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WorkspaceScreen()),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
