@@ -19,26 +19,6 @@ class _LoginState extends State<Login> {
   final TextEditingController _password = TextEditingController();
 
   void loginUser() {
-    //
-    // IF USER DOES NOT EXIST --------------------------------------------------
-    //
-    // snackBar = SnackBar(
-    //   content:
-    //   Text('Email or password is incorrect'),
-    //   backgroundColor: Colors.red,
-    // );
-    // ScaffoldMessenger.of(context)
-    //     .showSnackBar(snackBar);
-    //
-    // IF USER EXIST --------------------------------------------------
-    //
-    // snackBar2 = SnackBar(
-    //   content:
-    //   Text('Login success'),
-    //   backgroundColor: Colors.green,
-    // );
-    // ScaffoldMessenger.of(context)
-    //     .showSnackBar(snackBar2);
 
     Map<String, dynamic> map = new Map<String, dynamic>();
     map['email'] = _login.text;
