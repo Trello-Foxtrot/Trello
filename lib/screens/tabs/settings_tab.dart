@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/board_button.dart';
+import 'package:trello/popups/delete_workspace_popup.dart';
 import 'package:trello/popups/rename_workspace_popup.dart';
 
 class SettingsTab extends StatefulWidget {
@@ -41,7 +42,7 @@ class _SettingsTabState extends State<SettingsTab> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return RenameWorkspaceDialog();
+                        return DeleteWorkspaceDialog();
                       });
                 },
                 bgColor: Colors.grey,
