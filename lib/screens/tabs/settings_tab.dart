@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/board_button.dart';
 import 'package:trello/popups/rename_workspace_popup.dart';
 
-
 class SettingsTab extends StatefulWidget {
   @override
   _SettingsTabState createState() => _SettingsTabState();
@@ -19,11 +18,11 @@ class _SettingsTabState extends State<SettingsTab> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Wrap(
-            spacing: 30, // gap between adjacent chips
+            spacing: 30,
+            // gap between adjacent chips
             runSpacing: 40,
             alignment: WrapAlignment.spaceEvenly,
             runAlignment: WrapAlignment.spaceEvenly,
-            //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BoardButton(
                 onClick: () {
@@ -34,9 +33,7 @@ class _SettingsTabState extends State<SettingsTab> {
                       });
                 },
                 text: "Change workspace name",
-
               ),
-
               BoardButton(
                 text: "Delete workspace",
                 textColor: Colors.white,
