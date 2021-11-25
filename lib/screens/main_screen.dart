@@ -22,7 +22,9 @@ class _MainScreenState extends State<MainScreen> {
       Map<String, String> map = response.headers;
       setState(() {
         myWorkSpacesList = map['admin']?.split(',') ?? [];
+        myWorkSpacesList.removeLast();
         guestWorkspace = map['guest']?.split(',') ?? [];
+        guestWorkspace.removeLast();
       });
     });
   }
