@@ -2,8 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/main_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:trello/globals.dart' as globals;
 
 class DeleteWorkspaceDialog extends StatelessWidget {
+
+  void deleteWorkspace(BuildContext context) {
+    Map<String, dynamic> map = new Map<String, dynamic>();
+    map['id'] = globals.CurrentWorkspace.id;
+
+    http.post(
+      Uri.parse('http://localhost:8000/trello/workspace/delete'),
+      body: map,
+    ).then((value) =>
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MainScreen()),
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -55,10 +73,7 @@ class DeleteWorkspaceDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainScreen()),
-                        );
+                        deleteWorkspace(context);
                       },
                     ),
                   ],

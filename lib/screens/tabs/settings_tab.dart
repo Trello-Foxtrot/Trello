@@ -9,7 +9,6 @@ class SettingsTab extends StatefulWidget {
 }
 
 class _SettingsTabState extends State<SettingsTab> {
-  List<String> myWorkSpacesList = [];
 
   @override
   Widget build(BuildContext context) {

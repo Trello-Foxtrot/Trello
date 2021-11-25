@@ -2,9 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/workspace_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:trello/globals.dart' as globals;
 
 class RenameWorkspaceDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _title = TextEditingController();
+
+  void renameWorkspace(String name) {
+    Map<String, dynamic> map = new Map<String, dynamic>();
+    map['id'] = globals.CurrentWorkspace.id;
+    map['new_name'] = name;
+    globals.CurrentWorkspace.title = name;
+
+    http.post(
+      Uri.parse('http://localhost:8000/trello/workspace/rename'),
+      body: map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +63,7 @@ class RenameWorkspaceDialog extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  controller: _title,
                   keyboardType: TextInputType.name,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -73,6 +89,7 @@ class RenameWorkspaceDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
+                          renameWorkspace(_title.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

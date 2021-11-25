@@ -3,6 +3,7 @@ import 'package:trello/screens/tabs/boards_tab.dart';
 import 'package:trello/screens/tabs/members_tab.dart';
 import 'package:trello/screens/tabs/settings_tab.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:trello/globals.dart' as globals;
 
 class WorkspaceScreen extends StatefulWidget {
   @override
@@ -58,19 +59,19 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.tv,
                       color: darkBlue,
                       size: 90,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 50,
                     ),
                     Text(
-                      "Work",
+                      globals.CurrentWorkspace.title,
                       style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -133,7 +134,7 @@ class TabContainer extends StatelessWidget {
   final VoidCallback? onClick;
   final bool isActive;
 
-  TabContainer({this.text, this.onClick, required this.isActive});
+  const TabContainer({this.text, this.onClick, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
