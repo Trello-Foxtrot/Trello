@@ -24,8 +24,7 @@ class _LoginState extends State<Login> {
     map['email'] = _login.text;
     map['password'] = _password.text;
 
-    http
-        .post(
+    http.post(
       Uri.parse('http://localhost:8000/trello/login'),
       body: map,
     )

@@ -11,7 +11,7 @@ class RenameWorkspaceDialog extends StatelessWidget {
 
   void renameWorkspace(String name) {
     Map<String, dynamic> map = new Map<String, dynamic>();
-    map['id'] = globals.CurrentWorkspace.id;
+    map['id'] = globals.CurrentWorkspace.id.toString();
     map['new_name'] = name;
     globals.CurrentWorkspace.title = name;
 

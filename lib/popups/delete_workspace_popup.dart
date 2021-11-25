@@ -9,7 +9,7 @@ class DeleteWorkspaceDialog extends StatelessWidget {
 
   void deleteWorkspace(BuildContext context) {
     Map<String, dynamic> map = new Map<String, dynamic>();
-    map['id'] = globals.CurrentWorkspace.id;
+    map['id'] = globals.CurrentWorkspace.id.toString();
 
     http.post(
       Uri.parse('http://localhost:8000/trello/workspace/delete'),

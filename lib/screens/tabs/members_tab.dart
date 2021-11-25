@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:http/http.dart' as http;
+import 'package:trello/globals.dart' as globals;
 
 class MembersTab extends StatefulWidget {
   @override
@@ -7,13 +9,27 @@ class MembersTab extends StatefulWidget {
 }
 
 class _MembersTabState extends State<MembersTab> {
-  List<String> memberList = [
-    "11111@gmail.com",
-    "22222@gmail.com",
-    "33333@gmail.com",
-    "44444@gmail.com",
-    "555@gmail.com",
-  ];
+  List<String> memberList = [];
+
+  _MembersTabState() {
+    updateMembersLists();
+  }
+
+  void updateMembersLists() {
+    Map<String, dynamic> map = new Map<String, dynamic>();
+    map['id'] = globals.CurrentWorkspace.id.toString();
+
+    http.post(
+        Uri.parse('http://localhost:8000/trello/workspace/members'),
+        body: map,
+    ).then((response) {
+      Map<String, dynamic> map = response.headers;
+      setState(() {
+        memberList = map['members']?.split(',') ?? [];
+        memberList.removeLast();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

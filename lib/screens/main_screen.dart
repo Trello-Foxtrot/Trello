@@ -118,6 +118,9 @@ class _MainScreenState extends State<MainScreen> {
                           return BoardButton(
                             text: myWorkSpacesList[index],
                             onClick: () {
+                              globals.CurrentWorkspace.id = int.parse(myWorkSpacesIDList[index]);
+                              globals.CurrentWorkspace.title = myWorkSpacesList[index];
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
