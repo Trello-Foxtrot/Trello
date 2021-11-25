@@ -19,10 +19,18 @@ class _MainScreenState extends State<MainScreen> {
     http.post(
       Uri.parse('http://localhost:8000/trello/workspace')
     ).then((response) {
-      Map<String, dynamic> map = response.headers;
-      myWorkSpacesList = map['admin'];
-      guestWorkspace = map['guest'];
+      Map<String, String> map = response.headers;
+      setState(() {
+        myWorkSpacesList = map['admin']?.split(',') ?? [];
+        guestWorkspace = map['guest']?.split(',') ?? [];
+      });
     });
+  }
+
+  @override
+  void initState() {
+    updateWorkspacesLists();
+    super.initState();
   }
 
   @override
