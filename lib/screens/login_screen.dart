@@ -19,7 +19,6 @@ class _LoginState extends State<Login> {
   final TextEditingController _password = TextEditingController();
 
   void loginUser() {
-
     Map<String, dynamic> map = new Map<String, dynamic>();
     map['email'] = _login.text;
     map['password'] = _password.text;
@@ -35,15 +34,12 @@ class _LoginState extends State<Login> {
           context,
           MaterialPageRoute(builder: (context) => MainScreen()),
         );
-      }
-      else {
+      } else {
         SnackBar snackBar = SnackBar(
-           content:
-           Text(map['email']),
-           backgroundColor: Colors.red,
-         );
-         ScaffoldMessenger.of(context)
-             .showSnackBar(snackBar);
+          content: Text(map['email']),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
       return response;
     });
@@ -66,15 +62,10 @@ class _LoginState extends State<Login> {
             MaterialPageRoute(builder: (context) => SignUp()),
           );
         },
-        style:
-            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
+        style: ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
         child: const Align(
           alignment: Alignment.center,
-          child: Text('Sign up',
-              style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold)),
+          child: Text('Sign up', style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -95,11 +86,7 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Container(
-                constraints: const BoxConstraints(
-                    minWidth: 300,
-                    maxWidth: 400,
-                    minHeight: 520,
-                    maxHeight: 540),
+                constraints: const BoxConstraints(minWidth: 300, maxWidth: 400, minHeight: 520, maxHeight: 540),
                 padding: const EdgeInsets.all(25),
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: MediaQuery.of(context).size.height / 1.5,
@@ -133,8 +120,7 @@ class _LoginState extends State<Login> {
                         autofocus: false,
                         decoration: const InputDecoration(
                           hintText: 'Email',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -151,8 +137,7 @@ class _LoginState extends State<Login> {
                         obscureText: true,
                         decoration: const InputDecoration(
                           hintText: 'Password',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -164,27 +149,17 @@ class _LoginState extends State<Login> {
                       const SizedBox(height: 40.0),
                       // LOG IN BUTTON ---------------------------------------
                       Container(
-                        constraints: const BoxConstraints(
-                            minWidth: 150, maxWidth: 200, minHeight: 40),
+                        constraints: const BoxConstraints(minWidth: 150, maxWidth: 200, minHeight: 40),
                         width: MediaQuery.of(context).size.width / 2.5,
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               loginUser();
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => MainScreen()),
-                              // );
                             }
                           },
-                          style: ElevatedButton.styleFrom(
-                              primary: darkBlue, shape: StadiumBorder()),
+                          style: ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
                           child: const Text('Log In',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
+                              style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
                         ),
                       ),
                       const SizedBox(height: 60.0),
@@ -192,9 +167,7 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Row(
-                            children: const <Widget>[
-                              Text("Don't have an account?")
-                            ],
+                            children: const <Widget>[Text("Don't have an account?")],
                           ),
                           sighupButton,
                         ],

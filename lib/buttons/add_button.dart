@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddButton extends StatelessWidget {
   final VoidCallback? onClick;
 
-  AddButton({this.onClick});
+  const AddButton({this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,7 @@ class AddButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             primary: Colors.grey,
             fixedSize: const Size(200, 80),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       ),
     );
   }

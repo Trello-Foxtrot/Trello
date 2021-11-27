@@ -92,8 +92,7 @@ class RenameWorkspaceDialog extends StatelessWidget {
                           renameWorkspace(_title.text);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => WorkspaceScreen()),
+                            MaterialPageRoute(builder: (context) => WorkspaceScreen()),
                           );
                         }
                       },

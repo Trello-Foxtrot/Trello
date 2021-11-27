@@ -19,7 +19,6 @@ class _SettingsTabState extends State<SettingsTab> {
         children: [
           Wrap(
             spacing: 30,
-            // gap between adjacent chips
             runSpacing: 40,
             alignment: WrapAlignment.spaceEvenly,
             runAlignment: WrapAlignment.spaceEvenly,

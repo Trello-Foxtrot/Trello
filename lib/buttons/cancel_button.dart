@@ -4,7 +4,7 @@ import 'package:trello/utils/colors.dart';
 class CancelButton extends StatelessWidget {
   final VoidCallback? onClick;
 
-  CancelButton({this.onClick});
+  const CancelButton({this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,10 @@ class CancelButton extends StatelessWidget {
           padding: EdgeInsets.all(8.0),
           child: Text(
             'Cancel',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
           ),
         ),
-        style: ElevatedButton.styleFrom(primary: lightGrey, shape: StadiumBorder()),
+        style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
       ),
     );
   }

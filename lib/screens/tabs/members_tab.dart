@@ -41,9 +41,7 @@ class _MembersTabState extends State<MembersTab> {
             return SizedBox(
               width: 100,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * .2,
-                    vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .2, vertical: 10),
                 child: Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,9 +59,7 @@ class _MembersTabState extends State<MembersTab> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
-                          primary: lightGrey,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20))),
+                          primary: lightGrey, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
                     ),
                   ],
                 ),

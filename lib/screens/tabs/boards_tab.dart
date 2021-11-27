@@ -42,7 +42,7 @@ class _BoardsTabState extends State<BoardsTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Wrap(
-              spacing: 30, // gap between adjacent chips
+              spacing: 30,
               runSpacing: 40,
               children: boardsList.isEmpty
                   ? List.generate(

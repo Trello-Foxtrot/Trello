@@ -21,8 +21,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
         centerTitle: true,
         title: const Text(
           "Trello",
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -142,17 +141,13 @@ class TabContainer extends StatelessWidget {
       onPressed: onClick,
       child: Text(
         text!,
-        style: TextStyle(
-            color: isActive ? darkGrey : Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w600),
+        style: TextStyle(color: isActive ? darkGrey : Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
       ),
       style: ElevatedButton.styleFrom(
           elevation: 0,
           primary: isActive ? Colors.white : lightBlue,
           fixedSize: const Size(150, 35),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
     );
   }
 }
