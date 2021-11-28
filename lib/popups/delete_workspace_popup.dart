@@ -12,7 +12,7 @@ class DeleteWorkspaceDialog extends StatelessWidget {
     map['id'] = globals.CurrentWorkspace.id.toString();
 
     http.post(
-      Uri.parse('http://localhost:8000/trello/workspace/delete'),
+      Uri.parse('https://localhost:8000/trello/workspace/delete'),
       body: map,
     ).then((value) =>
       Navigator.push(

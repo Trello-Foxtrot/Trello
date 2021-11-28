@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
@@ -23,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void updateWorkspacesLists() {
     http.post(
-      Uri.parse('http://localhost:8000/trello/workspace')
+      Uri.parse('https://localhost:8000/trello/workspace')
     ).then((response) {
       Map<String, dynamic> map = response.headers;
       setState(() {

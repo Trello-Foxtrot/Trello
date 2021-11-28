@@ -14,7 +14,7 @@ class CreateWorkSpaceDialog extends StatelessWidget {
     map['name'] = name;
 
     http.post(
-      Uri.parse('http://localhost:8000/trello/workspace/add'),
+      Uri.parse('https://localhost:8000/trello/workspace/add'),
       body: map,
     );
   }

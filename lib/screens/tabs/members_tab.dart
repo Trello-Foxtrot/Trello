@@ -20,7 +20,7 @@ class _MembersTabState extends State<MembersTab> {
     map['id'] = globals.CurrentWorkspace.id.toString();
 
     http.post(
-        Uri.parse('http://localhost:8000/trello/workspace/members'),
+        Uri.parse('https://localhost:8000/trello/workspace/members'),
         body: map,
     ).then((response) {
       Map<String, dynamic> map = response.headers;

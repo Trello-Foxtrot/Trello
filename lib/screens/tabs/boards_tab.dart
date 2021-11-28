@@ -22,7 +22,7 @@ class _BoardsTabState extends State<BoardsTab> {
     map['id'] = globals.CurrentWorkspace.id.toString();
 
     http.post(
-        Uri.parse('http://localhost:8000/trello/workspace/boards'),
+        Uri.parse('https://localhost:8000/trello/workspace/boards'),
         body: map,
     ).then((response) {
       Map<String, dynamic> map = response.headers;

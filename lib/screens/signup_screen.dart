@@ -27,7 +27,7 @@ class _SignUpState extends State<SignUp> {
 
     http
         .post(
-      Uri.parse('http://localhost:8000/trello/sign_up'),
+      Uri.parse('https://localhost:8000/trello/sign_up'),
       body: map,
     ).then((response) {
       Map<String, dynamic> map = response.headers;

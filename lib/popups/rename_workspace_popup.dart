@@ -16,7 +16,7 @@ class RenameWorkspaceDialog extends StatelessWidget {
     globals.CurrentWorkspace.title = name;
 
     http.post(
-      Uri.parse('http://localhost:8000/trello/workspace/rename'),
+      Uri.parse('https://localhost:8000/trello/workspace/rename'),
       body: map,
     );
   }

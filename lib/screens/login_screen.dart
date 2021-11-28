@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -19,16 +21,14 @@ class _LoginState extends State<Login> {
   final TextEditingController _password = TextEditingController();
 
   void loginUser() {
-
     Map<String, dynamic> map = new Map<String, dynamic>();
     map['email'] = _login.text;
     map['password'] = _password.text;
 
     http.post(
-      Uri.parse('http://localhost:8000/trello/login'),
+      Uri.parse('https://localhost:8000/trello/login'),
       body: map,
-    )
-        .then((response) {
+    ).then((response) {
       Map<String, dynamic> map = response.headers;
       if (map['email']!.isEmpty) {
         Navigator.push(
