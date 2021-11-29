@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
 import 'package:trello/popups/create_board_popup.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class BoardsTab extends StatefulWidget {
@@ -18,18 +17,17 @@ class _BoardsTabState extends State<BoardsTab> {
   }
 
   void updateBoardsLists() {
-    Map<String, dynamic> map = new Map<String, dynamic>();
+    Map<String, String> map = <String, String>{};
     map['id'] = globals.CurrentWorkspace.id.toString();
 
-    http.post(
-        Uri.parse('https://localhost:8000/trello/workspace/boards'),
-        body: map,
-    ).then((response) {
-      Map<String, dynamic> map = response.headers;
-      setState(() {
-        boardsList = map['boards']?.split(',') ?? [];
-        boardsList.removeLast();
-      });
+    map = globals.Session.post(
+        'trello/workspace/boards',
+        map,
+    );
+
+    setState(() {
+      boardsList = map['boards']?.split(',') ?? [];
+      boardsList.removeLast();
     });
   }
 
