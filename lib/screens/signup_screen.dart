@@ -25,22 +25,22 @@ class _SignUpState extends State<SignUp> {
     map['email'] = _email.text;
     map['password'] = _pass.text;
 
-    map = globals.Session.post(
+    globals.Session.post(
       'trello/sign_up',
       map
-    );
-
-    if (map['email']!.isEmpty) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
-      );
-    }
-    else {
-      _emailErr = map['email'] ?? "";
-      _form.currentState!.validate();
-      _emailErr = "";
-    }
+    ).then((resMap) {
+      if (resMap['email'].isEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      }
+      else {
+        _emailErr = resMap['email'];
+        _form.currentState!.validate();
+        _emailErr = "";
+      }
+    });
   }
 
   @override

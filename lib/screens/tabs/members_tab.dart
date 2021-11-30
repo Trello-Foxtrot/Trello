@@ -18,14 +18,14 @@ class _MembersTabState extends State<MembersTab> {
     Map<String, String> map = <String, String>{};
     map['id'] = globals.CurrentWorkspace.id.toString();
 
-    map = globals.Session.post(
+    globals.Session.post(
         'trello/workspace/members',
         map,
-    );
-
-    setState(() {
-      memberList = map['members']?.split(',') ?? [];
-      memberList.removeLast();
+    ).then((resMap) {
+      setState(() {
+        memberList = resMap['members'].split(',');
+        memberList.removeLast();
+      });
     });
   }
 

@@ -20,14 +20,14 @@ class _BoardsTabState extends State<BoardsTab> {
     Map<String, String> map = <String, String>{};
     map['id'] = globals.CurrentWorkspace.id.toString();
 
-    map = globals.Session.post(
+    globals.Session.post(
         'trello/workspace/boards',
         map,
-    );
-
-    setState(() {
-      boardsList = map['boards']?.split(',') ?? [];
-      boardsList.removeLast();
+    ).then((resMap) {
+      setState(() {
+        boardsList = resMap['boards'].split(',');
+        boardsList.removeLast();
+      });
     });
   }
 

@@ -21,20 +21,21 @@ class _MainScreenState extends State<MainScreen> {
   List<String> guestWorkspaceID = [];
 
   void updateWorkspacesLists() {
-    Map<String, String> map = globals.Session.post(
+    globals.Session.post(
       'trello/workspace',
       <String, String>{}
-    );
-    setState(() {
-      myWorkSpacesList = map['admin']?.split(',') ?? [];
-      myWorkSpacesList.removeLast();
-      myWorkSpacesIDList = map['admin_id']?.split(',') ?? [];
-      myWorkSpacesIDList.removeLast();
+    ).then((resMap) {
+      setState(() {
+        myWorkSpacesList = resMap['admin'].split(',');
+        myWorkSpacesList.removeLast();
+        myWorkSpacesIDList = resMap['admin_id'].split(',');
+        myWorkSpacesIDList.removeLast();
 
-      guestWorkspace = map['guest']?.split(',') ?? [];
-      guestWorkspace.removeLast();
-      guestWorkspaceID = map['guest_id']?.split(',') ?? [];
-      guestWorkspaceID.removeLast();
+        guestWorkspace = resMap['guest'].split(',');
+        guestWorkspace.removeLast();
+        guestWorkspaceID = resMap['guest_id'].split(',');
+        guestWorkspaceID.removeLast();
+      });
     });
   }
 

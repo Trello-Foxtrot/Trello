@@ -27,7 +27,8 @@ class Session {
         headers: baseHeaders,
         body: jsonEncode(body)
     );
-    Map<String, String> data = jsonDecode(res.body);
+
+    Map<String, dynamic> data = jsonDecode(res.body);
     return data;
   }
 }

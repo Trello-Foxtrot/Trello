@@ -23,26 +23,26 @@ class _LoginState extends State<Login> {
     map['email'] = _login.text;
     map['password'] = _password.text;
 
-    map = globals.Session.post(
+    globals.Session.post(
       'trello/login',
        map
-    );
-
-    if (map['email']!.isEmpty) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
-      );
-    }
-    else {
-      SnackBar snackBar = SnackBar(
-         content:
-         Text(map['email'] ?? ""),
-         backgroundColor: Colors.red,
-       );
-       ScaffoldMessenger.of(context)
-           .showSnackBar(snackBar);
-    }
+    ).then((resMap) {
+      if (resMap['email'].isEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      }
+      else {
+        SnackBar snackBar = SnackBar(
+          content:
+          Text(resMap['email']),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(snackBar);
+      }
+    });
   }
 
   @override
