@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
+
+import 'package:trello/popups/create_board_popup.dart';
+
 import 'package:trello/globals.dart' as globals;
 import 'package:trello/popups/create_board_popup.dart';
 import 'package:trello/screens/board_screen.dart';
@@ -19,16 +22,15 @@ class _BoardsTabState extends State<BoardsTab> {
   }
 
   void updateBoardsLists() {
-    Map<String, dynamic> map = new Map<String, dynamic>();
+    Map<String, String> map = <String, String>{};
     map['id'] = globals.CurrentWorkspace.id.toString();
 
-    http.post(
-      Uri.parse('http://localhost:8000/trello/workspace/boards'),
-      body: map,
-    ).then((response) {
-      Map<String, dynamic> map = response.headers;
+    globals.Session.post(
+        'trello/workspace/boards',
+        map,
+    ).then((resMap) {
       setState(() {
-        boardsList = map['boards']?.split(',') ?? [];
+        boardsList = resMap['boards'].split(',');
         boardsList.removeLast();
       });
     });

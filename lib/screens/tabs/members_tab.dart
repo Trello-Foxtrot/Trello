@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trello/utils/colors.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class MembersTab extends StatefulWidget {
@@ -16,16 +15,15 @@ class _MembersTabState extends State<MembersTab> {
   }
 
   void updateMembersLists() {
-    Map<String, dynamic> map = new Map<String, dynamic>();
+    Map<String, String> map = <String, String>{};
     map['id'] = globals.CurrentWorkspace.id.toString();
 
-    http.post(
-        Uri.parse('http://localhost:8000/trello/workspace/members'),
-        body: map,
-    ).then((response) {
-      Map<String, dynamic> map = response.headers;
+    globals.Session.post(
+        'trello/workspace/members',
+        map,
+    ).then((resMap) {
       setState(() {
-        memberList = map['members']?.split(',') ?? [];
+        memberList = resMap['members'].split(',');
         memberList.removeLast();
       });
     });
