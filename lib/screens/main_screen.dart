@@ -53,8 +53,7 @@ class _MainScreenState extends State<MainScreen> {
         centerTitle: true,
         title: const Text(
           "Trello",
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -68,17 +67,6 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             width: 30,
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: const Icon(
-          //     Icons.login,
-          //     size: 30,
-          //     color: Colors.white,
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 30,
-          // ),
         ],
       ),
       body: Padding(
@@ -91,10 +79,7 @@ class _MainScreenState extends State<MainScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                 child: Text(
                   "YOUR WORKSPACES",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: darkGrey,
-                      fontSize: 25),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: darkGrey, fontSize: 25),
                 ),
               ),
               Wrap(

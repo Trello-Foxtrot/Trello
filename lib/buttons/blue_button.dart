@@ -5,7 +5,7 @@ class DialogBlueButton extends StatelessWidget {
   final VoidCallback? onClick;
   final String? text;
 
-  DialogBlueButton({this.onClick, this.text});
+  const DialogBlueButton({this.onClick, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,10 @@ class DialogBlueButton extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             text!,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+            style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ),
-        style:
-            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
+        style: ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
       ),
     );
   }

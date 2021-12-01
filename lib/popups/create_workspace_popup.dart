@@ -90,8 +90,7 @@ class CreateWorkSpaceDialog extends StatelessWidget {
 
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScreen()),
+                            MaterialPageRoute(builder: (context) => MainScreen()),
                           );
                         }
                       },

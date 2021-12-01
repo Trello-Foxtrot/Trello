@@ -17,17 +17,13 @@ class BoardButton extends StatelessWidget {
         onPressed: onClick ?? () {},
         child: Text(
           text!,
-          style: TextStyle(
-              color: textColor ?? darktextBlue,
-              fontSize: 20,
-              fontWeight: FontWeight.w600),
+          style: TextStyle(color: textColor ?? darktextBlue, fontSize: 20, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
         style: ElevatedButton.styleFrom(
             primary: bgColor ?? lightBlue,
             fixedSize: const Size(200, 80),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       ),
     );
   }

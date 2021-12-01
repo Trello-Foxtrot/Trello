@@ -76,19 +76,10 @@ class _SignUpState extends State<SignUp> {
         onPressed: () {
           if (_form.currentState!.validate()) {
             signUpUser();
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => MainScreen()),
-            // );
           }
         },
-        style:
-            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
-        child: const Text('Sign Up',
-            style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                fontWeight: FontWeight.bold)),
+        style: ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
+        child: const Text('Sign Up', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -102,15 +93,10 @@ class _SignUpState extends State<SignUp> {
             MaterialPageRoute(builder: (context) => Login()),
           );
         },
-        style:
-            ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
+        style: ElevatedButton.styleFrom(primary: darkBlue, shape: StadiumBorder()),
         child: const Align(
           alignment: Alignment.center,
-          child: Text('Log in',
-              style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold)),
+          child: Text('Log in', style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold)),
         ),
       ),
     );
@@ -131,11 +117,7 @@ class _SignUpState extends State<SignUp> {
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Container(
-                constraints: const BoxConstraints(
-                    minWidth: 300,
-                    maxWidth: 400,
-                    minHeight: 550,
-                    maxHeight: 600),
+                constraints: const BoxConstraints(minWidth: 300, maxWidth: 400, minHeight: 550, maxHeight: 600),
                 padding: const EdgeInsets.all(25),
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: MediaQuery.of(context).size.height / 1.5,
@@ -172,8 +154,7 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                         decoration: const InputDecoration(
                           hintText: 'Password',
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -191,8 +172,7 @@ class _SignUpState extends State<SignUp> {
                           obscureText: true,
                           decoration: const InputDecoration(
                             hintText: 'Password',
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                           ),
                           validator: (val) {
                             if (val!.isEmpty) {
