@@ -16,7 +16,7 @@ class _MembersTabState extends State<MembersTab> {
 
   void updateMembersLists() {
     Map<String, String> map = <String, String>{};
-    map['id'] = globals.CurrentWorkspace.id.toString();
+    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
 
     globals.Session.post(
         'trello/workspace/members',

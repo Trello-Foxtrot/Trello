@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
 
 import 'package:trello/popups/create_board_popup.dart';
 
 import 'package:trello/globals.dart' as globals;
-import 'package:trello/popups/create_board_popup.dart';
 import 'package:trello/screens/board_screen.dart';
 
 class BoardsTab extends StatefulWidget {
@@ -23,7 +21,7 @@ class _BoardsTabState extends State<BoardsTab> {
 
   void updateBoardsLists() {
     Map<String, String> map = <String, String>{};
-    map['id'] = globals.CurrentWorkspace.id.toString();
+    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
 
     globals.Session.post(
         'trello/workspace/boards',

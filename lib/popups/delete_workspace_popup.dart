@@ -8,7 +8,7 @@ class DeleteWorkspaceDialog extends StatelessWidget {
 
   void deleteWorkspace(BuildContext context) {
     Map<String, String> map = <String, String>{};
-    map['id'] = globals.CurrentWorkspace.id.toString();
+    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
 
     globals.Session.post(
       'trello/workspace/delete',
