@@ -7,6 +7,7 @@ import 'package:trello/popups/list%20popups/create_list.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/popups/list%20popups/rename_list.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:trello/globals.dart' as globals;
 
 class BoardScreen extends StatefulWidget {
   @override
@@ -16,12 +17,41 @@ class BoardScreen extends StatefulWidget {
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
 
-  List<String> list_of_list = ["title 1", "title 2", "title 3"];
-  var list_of_cards = [
-    ["card 1.1", "card 1.2", "card 1.3", "card 1.4"],
-    ["card 2.1"],
-    [] // empty list
-  ];
+  List<String> list_of_list = [];
+  List<String> list_of_listId = [];
+  var list_of_cards = [[]];
+  var list_of_cardsId = [[]];
+
+  void updateBoardsListsAndCards() {
+    Map<String, String> map = <String, String>{};
+    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
+
+    globals.Session.post(
+      'workspace/boards/lists',
+      map,
+    ).then((resMap) {
+      setState(() {
+        list_of_list = resMap['lists'].split(',');
+        list_of_list.removeLast();
+
+        list_of_listId = resMap['lists_id'].split(',');
+        list_of_listId.removeLast();
+      });
+    });
+
+    globals.Session.post(
+      'workspace/boards/lists',
+      map,
+    ).then((resMap) {
+      setState(() {
+        list_of_list = resMap['lists'].split(',');
+        list_of_list.removeLast();
+
+        list_of_listId = resMap['lists_id'].split(',');
+        list_of_listId.removeLast();
+      });
+    });
+  }
 
   @override
   void initState() {

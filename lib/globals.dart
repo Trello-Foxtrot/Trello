@@ -10,6 +10,11 @@ class CurrentWorkspace {
   static int id = -1;
 }
 
+class CurrentBoard {
+  static String title = '';
+  static int id = -1;
+}
+
 class Session {
   static BrowserClient client = BrowserClient()..withCredentials = true;
   static Map<String, String> baseHeaders = <String, String>{

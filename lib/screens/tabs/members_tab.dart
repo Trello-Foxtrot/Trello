@@ -23,8 +23,7 @@ class _MembersTabState extends State<MembersTab> {
         map,
     ).then((resMap) {
       setState(() {
-        memberList = resMap['members'].split(',');
-        memberList.removeLast();
+        memberList = resMap['members'].cast<String>();
       });
     });
   }

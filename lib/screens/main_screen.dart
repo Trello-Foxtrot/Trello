@@ -26,15 +26,11 @@ class _MainScreenState extends State<MainScreen> {
       <String, String>{}
     ).then((resMap) {
       setState(() {
-        myWorkSpacesList = resMap['admin'].split(',');
-        myWorkSpacesList.removeLast();
-        myWorkSpacesIDList = resMap['admin_id'].split(',');
-        myWorkSpacesIDList.removeLast();
+        myWorkSpacesList = resMap['admin'].cast<String>();
+        myWorkSpacesIDList = resMap['admin_id'].cast<String>();
 
-        guestWorkspace = resMap['guest'].split(',');
-        guestWorkspace.removeLast();
-        guestWorkspaceID = resMap['guest_id'].split(',');
-        guestWorkspaceID.removeLast();
+        guestWorkspace = resMap['guest'].cast<String>();
+        guestWorkspaceID = resMap['guest_id'].cast<String>();
       });
     });
   }
