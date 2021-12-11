@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trello/buttons/blue_button.dart';
-import 'package:trello/buttons/cancel_button.dart';
-import 'package:trello/screens/board_screen.dart';
-import 'package:trello/screens/workspace_screen.dart';
 
 class OpenCardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -11,17 +7,17 @@ class OpenCardDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(20),
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       child: Container(
-        width: 400,
-        height: 350,
+        width: 900,
+        height: MediaQuery.of(context).size.height * 0.98,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
@@ -30,61 +26,280 @@ class OpenCardDialog extends StatelessWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.only(top: 40),
-                  child: Text(
-                    "a Card",
-                    style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.name,
-                  autofocus: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Title',
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a title';
-                    }
-                    return null;
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CancelButton(
-                      onClick: () {
-                        Navigator.of(context).pop();
-                      },
+                    Text('Title',
+                      // style: GoogleFonts.robotoSlab(
+                      //     textStyle: TextStyle(
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold
+                      //     )
+                      // ),
                     ),
-                    DialogBlueButton(
-                      text: "Create",
-                      onClick: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
-                          );
-                        }
-                      },
+                    Text("Card's Title",
+                      // style: GoogleFonts.robotoSlab(
+                      //   textStyle: TextStyle(
+                      //   ),
+                      // ),
+                    ),
+                    Text('Description',
+                      // style: GoogleFonts.robotoSlab(
+                      //     textStyle: TextStyle(
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold
+                      //     )
+                      // ),
+                    ),
+                    Text("Card's description Card's description Card's description\nCard's description Card's description Card's\n descriptionCard's description",
+                      // style: GoogleFonts.robotoSlab(
+                      //   textStyle: TextStyle(
+                      //   ),
+                      // ),
+                    ),
+                    Text('Attachments',
+                      // style: GoogleFonts.robotoSlab(
+                      //     textStyle: TextStyle(
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold
+                      //     )
+                      // ),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text("image.jpg",
+                              // style: GoogleFonts.robotoSlab(
+                              //   textStyle: TextStyle(
+                              //   ),
+                              // ),
+                            ),
+                            SizedBox(width: 445,),
+                            Icon(Icons.close,color: Colors.grey,)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("image.png",
+                              // style: GoogleFonts.robotoSlab(
+                              //   textStyle: TextStyle(
+                              //   ),
+                              // ),
+                            ),
+                            SizedBox(width: 440,),
+                            Icon(Icons.close,color: Colors.grey,)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("qwert.file",
+                              // style: GoogleFonts.robotoSlab(
+                              //   textStyle: TextStyle(
+                              //   ),
+                              // ),
+                            ),
+                            SizedBox(width: 445,),
+                            Icon(Icons.close,color: Colors.grey,)
+                          ],
+                        ),
+                      ],
+                    ),
+                    Text('Comments',
+                      // style: GoogleFonts.robotoSlab(
+                      //     textStyle: TextStyle(
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold
+                      //     )
+                      // ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("111@gmail.com",
+                          // style: GoogleFonts.robotoSlab(
+                          //   textStyle: TextStyle(
+                          //   ),
+                          // ),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 550,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  height: 50,
+                                  width: 500,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade200,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+
+                                  child: Text('Text Text Text Text Text TextText Text Text Text Text Text Text Text Text Text\n Text Text Text Text Text v')),
+
+                              SizedBox(width: 8,),
+                              Icon(Icons.close,color: Colors.grey,),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("113@gmail.com",
+                          // style: GoogleFonts.robotoSlab(
+                          //   textStyle: TextStyle(
+                          //   ),
+                          // ),
+                        ),
+                        Container(
+                          height: 100,
+                          width: 550,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  height: 50,
+                                  width: 500,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade200,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+
+                                  child: Text('Text Text Text Text Text TextText Text Text Text Text Text Text Text Text Text\n Text Text Text Text Text Text Text Text Text Text Text Text')),
+
+                              SizedBox(width: 8,),
+                              Icon(Icons.close,color: Colors.grey,),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("121@gmail.com",
+                          // style: GoogleFonts.robotoSlab(
+                          //   textStyle: TextStyle(
+                          //   ),
+                          // ),
+                        ),
+                        Container(
+                          height: 35,
+                          width: 550,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  height: 35,
+                                  width: 500,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade200,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+
+                                  child: Text('Text Text Text Text Text TextText Text ')),
+
+                              SizedBox(width: 8,),
+                              Icon(Icons.close,color: Colors.grey,),
+                            ],
+                          ),
+                        ),
+
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    IconButton(icon: Icon(Icons.close,color: Colors.grey,size: 30,),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(height: 10,),
+                    Container(
+                      height: 35,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.grey
+                      ),
+                      child: Center(
+                        child: Text('Delete the card',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Container(
+                      height: 35,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.grey
+                      ),
+                      child: Center(
+                        child: Text('Change the title',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Container(
+                      height: 35,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.grey
+                      ),
+                      child: Center(
+                        child: Text('Change the description',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Container(
+                      height: 35,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.grey
+                      ),
+                      child: Center(
+                        child: Text('Add an attachment',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Container(
+                      height: 35,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.grey
+                      ),
+                      child: Center(
+                        child: Text('Write a comment',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
