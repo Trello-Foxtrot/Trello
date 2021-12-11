@@ -27,84 +27,6 @@ class _BoardScreenState extends State<BoardScreen> {
     super.initState();
 
     _contents = List.generate(list_of_list.length, (index) => _buildList(index));
-
-    // _contents = List.generate(9, (index) {
-    //   return DragAndDropList(
-    //     header: Row(
-    //       children: [
-    //         Expanded(
-    //           child: GestureDetector(
-    //             onTap: () {
-    //               setState(() {
-    //                 showDialog(
-    //                     context: context,
-    //                     builder: (BuildContext context) {
-    //                       // TODO rename the list
-    //                       return RenameListDialog();
-    //                     });
-    //               });
-    //             },
-    //             child: Container(
-    //               // color: Colors.yellow.shade600,
-    //               decoration: const BoxDecoration(
-    //                 borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
-    //                 color: lightBlue,
-    //               ),
-    //               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    //               child: Text(
-    //                 'List $index',
-    //                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     footer: Row(
-    //       children: [
-    //         Expanded(
-    //           child: GestureDetector(
-    //             onTap: () {
-    //               setState(() {
-    //                 showDialog(
-    //                     context: context,
-    //                     builder: (BuildContext context) {
-    //                       // TODO rename the list
-    //                       return CreateCardDialog();
-    //                     });
-    //               });
-    //             },
-    //             child: Container(
-    //               // color: Colors.yellow.shade600,
-    //               decoration: const BoxDecoration(
-    //                 borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.0)),
-    //                 color: lightBlue,
-    //               ),
-    //               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    //               child: const Text(
-    //                 'Add a card',
-    //                 style: TextStyle(color: darkGrey, fontSize: 14),
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //     leftSide: const VerticalDivider(
-    //       color: lightBlue,
-    //       width: 5,
-    //       thickness: 5,
-    //     ),
-    //     rightSide: const VerticalDivider(
-    //       color: lightBlue,
-    //       width: 5,
-    //       thickness: 5,
-    //     ),
-    //     children: <DragAndDropItem>[
-    //       _buildItem('123 fv g  g tr g g ht tr htr ht eth htr gt g tr g wgr'),
-    //     ],
-    //   );
-    // });
   }
 
   _buildList(int outerIndex) {
@@ -112,7 +34,6 @@ class _BoardScreenState extends State<BoardScreen> {
     return DragAndDropList(
       header: Container(
         decoration: const BoxDecoration(
-          // borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0)),
           borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
           color: lightBlue,
         ),
@@ -120,23 +41,8 @@ class _BoardScreenState extends State<BoardScreen> {
           children: [
             Expanded(
               child: GestureDetector(
-                onTap: () {
-                  // setState(() {
-                  //   showDialog(
-                  //       context: context,
-                  //       builder: (BuildContext context) {
-                  //         // TODO rename the list
-                  //         return RenameListDialog();
-                  //       });
-                  // });
-                },
+                onTap: () {},
                 child: Container(
-                  // color: Colors.yellow.shade600,
-                  // decoration: const BoxDecoration(
-                  //   borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0)),
-                  //   // borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
-                  //   color: lightBlue,
-                  // ),
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text(
                     list_name,
@@ -223,13 +129,11 @@ class _BoardScreenState extends State<BoardScreen> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-
                         return CreateCardDialog();
                       });
                 });
               },
               child: Container(
-                // color: Colors.yellow.shade600,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.0)),
                   color: lightBlue,
@@ -287,7 +191,6 @@ class _BoardScreenState extends State<BoardScreen> {
             child: Container(
               width: 250,
               padding: const EdgeInsets.all(8),
-              // Change button text when light changes state.
               child: Text(text),
             ),
           ),
