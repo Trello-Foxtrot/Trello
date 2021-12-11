@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:trello/popups/card%20popups/create_card.dart';
 import 'package:trello/popups/card%20popups/open_card.dart';
+import 'package:trello/popups/list%20popups/create_list.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/popups/list%20popups/rename_list.dart';
 import 'package:trello/utils/colors.dart';
@@ -27,6 +28,50 @@ class _BoardScreenState extends State<BoardScreen> {
     super.initState();
 
     _contents = List.generate(list_of_list.length, (index) => _buildList(index));
+    _contents.add(DragAndDropList(
+      header: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CreateListDialog();
+                      });
+                });
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all( Radius.circular(15.0)),
+                  color: lightGrey,
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      'Add another list',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+
+      children: [],
+    ));
+
   }
 
   _buildList(int outerIndex) {
@@ -227,6 +272,8 @@ class _BoardScreenState extends State<BoardScreen> {
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: DragAndDropLists(
+
+          contentsWhenEmpty: Text(""),
           children: _contents,
           onItemReorder: _onItemReorder,
           onListReorder: _onListReorder,
