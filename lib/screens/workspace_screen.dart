@@ -35,15 +35,6 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
           const SizedBox(
             width: 30,
           ),
-          // IconButton(
-          //   onPressed: () {},
-          //   icon: const Icon(
-          //     Icons.login,
-          //     size: 30,
-          //     color: Colors.white,
-          //   ),
-          // ),
-          // const SizedBox(width: 20,),
         ],
       ),
       body: Column(

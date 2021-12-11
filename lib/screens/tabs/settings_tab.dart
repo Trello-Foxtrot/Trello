@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/board_button.dart';
-import 'package:trello/popups/delete_workspace_popup.dart';
-import 'package:trello/popups/rename_workspace_popup.dart';
+import 'package:trello/popups/workspace%20popups/delete_workspace.dart';
+import 'package:trello/popups/workspace%20popups/rename_workspace.dart';
 
 class SettingsTab extends StatefulWidget {
   @override
