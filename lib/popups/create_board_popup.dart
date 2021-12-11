@@ -8,7 +8,7 @@ class CreateBoardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
 
-  void addBoard(BuildContext context) {
+  void addBoard() {
     Map<String, String> map = <String, String>{};
     map['workspace_id'] = globals.CurrentWorkspace.id.toString();
     map['name'] = _titleController.text;
@@ -87,6 +87,7 @@ class CreateBoardDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
+                          addBoard();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => WorkspaceScreen()),
