@@ -31,11 +31,8 @@ class _BoardScreenState extends State<BoardScreen> {
       map,
     ).then((resMap) {
       setState(() {
-        list_of_list = resMap['lists'].split(',');
-        list_of_list.removeLast();
-
-        list_of_listId = resMap['lists_id'].split(',');
-        list_of_listId.removeLast();
+        list_of_list = resMap['lists'].cast<String>();
+        list_of_listId = resMap['lists_id'].cast<String>();
       });
     });
 
