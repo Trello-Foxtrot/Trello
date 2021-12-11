@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
 import 'package:trello/globals.dart' as globals;
-import 'package:trello/popups/create_board_popup.dart';
+import 'package:trello/popups/board%20popups/create_board_popup.dart';
 import 'package:trello/screens/board_screen.dart';
 
 class BoardsTab extends StatefulWidget {

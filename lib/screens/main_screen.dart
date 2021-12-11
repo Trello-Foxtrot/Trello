@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
-import 'package:trello/popups/create_workspace_popup.dart';
+import 'package:trello/popups/workspace%20popups/create_workspace.dart';
 import 'package:trello/screens/workspace_screen.dart';
 import 'package:trello/utils/colors.dart';
 import 'package:http/http.dart' as http;
