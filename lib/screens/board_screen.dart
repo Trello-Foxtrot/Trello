@@ -24,7 +24,7 @@ class _BoardScreenState extends State<BoardScreen> {
 
   void updateBoardsListsAndCards() {
     Map<String, String> map = <String, String>{};
-    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
+    map['board_id'] = globals.CurrentBoard.id.toString();
 
     globals.Session.post(
       'workspace/boards/lists',
@@ -33,19 +33,9 @@ class _BoardScreenState extends State<BoardScreen> {
       setState(() {
         list_of_list = resMap['lists'].cast<String>();
         list_of_listId = resMap['lists_id'].cast<String>();
-      });
-    });
 
-    globals.Session.post(
-      'workspace/boards/lists',
-      map,
-    ).then((resMap) {
-      setState(() {
-        list_of_list = resMap['lists'].split(',');
-        list_of_list.removeLast();
-
-        list_of_listId = resMap['lists_id'].split(',');
-        list_of_listId.removeLast();
+        list_of_cards = resMap['cards'];
+        list_of_cardsId = resMap['cards_id'];
       });
     });
   }
@@ -141,7 +131,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return DeleteListDialog();
+                          return DeleteListDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
@@ -150,7 +140,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return RenameListDialog();
+                          return RenameListDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
