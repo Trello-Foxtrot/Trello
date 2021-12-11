@@ -44,7 +44,7 @@ class _BoardScreenState extends State<BoardScreen> {
               },
               child: Container(
                 decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all( Radius.circular(15.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   color: lightGrey,
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -68,10 +68,8 @@ class _BoardScreenState extends State<BoardScreen> {
           ),
         ],
       ),
-
       children: [],
     ));
-
   }
 
   _buildList(int outerIndex) {
@@ -88,10 +86,10 @@ class _BoardScreenState extends State<BoardScreen> {
               child: GestureDetector(
                 onTap: () {},
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                   child: Text(
                     list_name,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                 ),
               ),
@@ -136,7 +134,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     child: Text(
                       "Add card",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 14,
                       ),
                     ),
                     value: "add",
@@ -145,7 +143,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     child: Text(
                       "Rename the List",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 14,
                       ),
                     ),
                     value: "rename",
@@ -154,7 +152,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     child: Text(
                       "Delete the List",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 14,
                       ),
                     ),
                     value: "delete",
@@ -206,13 +204,13 @@ class _BoardScreenState extends State<BoardScreen> {
       ),
       leftSide: const VerticalDivider(
         color: lightBlue,
-        width: 5,
-        thickness: 5,
+        width: 10,
+        thickness: 10,
       ),
       rightSide: const VerticalDivider(
         color: lightBlue,
-        width: 5,
-        thickness: 5,
+        width: 10,
+        thickness: 10,
       ),
       children:
           List.generate(list_of_cards[outerIndex].length, (index) => _buildItem(list_of_cards[outerIndex][index].toString())),
@@ -234,7 +232,11 @@ class _BoardScreenState extends State<BoardScreen> {
               });
             },
             child: Container(
-              width: 250,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                // color: lightGrey,
+              ),
+              width: 240,
               padding: const EdgeInsets.all(8),
               child: Text(text),
             ),
@@ -272,7 +274,6 @@ class _BoardScreenState extends State<BoardScreen> {
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: DragAndDropLists(
-
           contentsWhenEmpty: Text(""),
           children: _contents,
           onItemReorder: _onItemReorder,
