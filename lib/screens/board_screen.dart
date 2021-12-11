@@ -68,7 +68,7 @@ class _BoardScreenState extends State<BoardScreen> {
           ),
         ],
       ),
-      children: [],
+      children: List.generate(1, (index) => _buildItem("             ")),
     ));
   }
 
@@ -246,6 +246,8 @@ class _BoardScreenState extends State<BoardScreen> {
     );
   }
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,59 +273,48 @@ class _BoardScreenState extends State<BoardScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: DragAndDropLists(
-          contentsWhenEmpty: Text(""),
-          children: _contents,
-          onItemReorder: _onItemReorder,
-          onListReorder: _onListReorder,
-          axis: Axis.horizontal,
-          listWidth: 300,
-          listDraggingWidth: 300,
-          listPadding: EdgeInsets.all(20.0),
-          itemDivider: const Divider(
-            thickness: 4,
-            height: 10,
-            color: lightBlue,
-          ),
-          itemDecorationWhileDragging: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xff004269).withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 3,
-                offset: const Offset(0, 0),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.98,
+        child: Scrollbar(
+          isAlwaysShown: true,
+          controller: _scrollController,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: DragAndDropLists(
+              scrollController: _scrollController,
+              contentsWhenEmpty: const Text(""),
+              children: _contents,
+              onItemReorder: _onItemReorder,
+              onListReorder: _onListReorder,
+              axis: Axis.horizontal,
+              listWidth: 300,
+              listDraggingWidth: 300,
+              listPadding: EdgeInsets.all(20.0),
+              itemDivider: const Divider(
+                thickness: 4,
+                height: 10,
+                color: lightBlue,
               ),
-            ],
+              itemDecorationWhileDragging: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff004269).withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 3,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+              ),
+              listInnerDecoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              lastItemTargetHeight: 2,
+              addLastItemTargetHeightToTop: true,
+              lastListTargetSize: 40,
+            ),
           ),
-          listInnerDecoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.all(Radius.circular(5)),
-          ),
-          lastItemTargetHeight: 2,
-          addLastItemTargetHeightToTop: true,
-          lastListTargetSize: 40,
-          // listDragHandle: const DragHandle(
-          //   verticalAlignment: DragHandleVerticalAlignment.top,
-          //   child: Padding(
-          //     padding: EdgeInsets.only(right: 10, top: 8),
-          //     child: Icon(
-          //       Icons.menu,
-          //       color: Colors.black26,
-          //     ),
-          //   ),
-          // ),
-          // itemDragHandle: const DragHandle(
-          //   child: Padding(
-          //     padding: EdgeInsets.only(right: 10),
-          //     child: Icon(
-          //       Icons.menu,
-          //       color: Color(0xff262f39),
-          //     ),
-          //   ),
-          // ),
         ),
       ),
     );
