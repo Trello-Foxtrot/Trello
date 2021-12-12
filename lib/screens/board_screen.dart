@@ -19,17 +19,18 @@ class _BoardScreenState extends State<BoardScreen> {
 
   List<String> list_of_list = [];
   List<String> list_of_listId = [];
-  var list_of_cards = [[]];
-  var list_of_cardsId = [[]];
+  var list_of_cards = [];
+  var list_of_cardsId = [];
 
-  void updateBoardsListsAndCards() {
+  Future<dynamic> updateBoardsListsAndCards() {
     Map<String, String> map = <String, String>{};
     map['board_id'] = globals.CurrentBoard.id.toString();
 
-    globals.Session.post(
-      'workspace/boards/lists',
+    Future<dynamic> f = globals.Session.post(
+      'trello/workspace/boards/lists',
       map,
-    ).then((resMap) {
+    );
+    f.then((resMap) {
       setState(() {
         list_of_list = resMap['lists'].cast<String>();
         list_of_listId = resMap['lists_id'].cast<String>();
@@ -38,55 +39,60 @@ class _BoardScreenState extends State<BoardScreen> {
         list_of_cardsId = resMap['cards_id'];
       });
     });
+
+    return f;
   }
 
   @override
   void initState() {
     super.initState();
 
-    _contents = List.generate(list_of_list.length, (index) => _buildList(index));
-    _contents.add(DragAndDropList(
-      header: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CreateListDialog();
-                      });
-                });
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  color: lightGrey,
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      'Add another list',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ],
+    _contents = List.empty();
+    updateBoardsListsAndCards().whenComplete(() {
+      _contents = List.generate(list_of_list.length, (index) => _buildList(index));
+      _contents.add(DragAndDropList(
+        header: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CreateListDialog();
+                        });
+                  });
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    color: lightGrey,
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'Add another list',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      children: [],
-    ));
+          ],
+        ),
+        children: [],
+      ));
+    });
   }
 
   _buildList(int outerIndex) {

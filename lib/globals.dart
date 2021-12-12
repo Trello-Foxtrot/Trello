@@ -25,7 +25,7 @@ class Session {
   };
   static String baseUrl = 'https://localhost:8000/';
 
-  static post(String url, Map<String, String> body) async {
+  static Future<dynamic> post(String url, Map<String, String> body) async {
     Uri uri = Uri.parse(baseUrl + url);
     Response res = await client.post(
         uri,

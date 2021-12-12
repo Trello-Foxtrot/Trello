@@ -14,7 +14,7 @@ class CreateListDialog extends StatelessWidget {
      map['name'] = name;
 
      globals.Session.post(
-       'workspace/boards/lists',
+       'trello/workspace/boards/lists/add',
        map,
      );
   }
