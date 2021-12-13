@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
-import 'package:trello/screens/workspace_screen.dart';
+import 'package:trello/screens/main_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
-class RenameCardDialog extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _title = TextEditingController();
-
-  // void renameCard(String name) {
+class DeleteAttachmentDialog extends StatelessWidget {
+  // void deleteAttachment(BuildContext context) {
   //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentCard.id.toString();
-  //   map['new_name'] = name;
-  //   globals.CurrentCard.title = name;
+  //   map['id'] = globals.CurrentAttachment.id.toString();
   //
   //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/card/rename'),
+  //     Uri.parse('http://localhost:8000/trello/Attachment/delete'),
   //     body: map,
+  //   ).then((value) =>
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => const MainScreen()),
+  //       )
   //   );
   // }
 
@@ -32,7 +32,7 @@ class RenameCardDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         width: 400,
-        height: 350,
+        height: 250,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
@@ -48,7 +48,6 @@ class RenameCardDialog extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Form(
-            key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,27 +55,12 @@ class RenameCardDialog extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(top: 40),
                   child: Text(
-                    "Change a Card name",
+                    "Are you sure you want to delete the Attachment?",
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                ),
-                TextFormField(
-                  controller: _title,
-                  keyboardType: TextInputType.name,
-                  autofocus: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Title',
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a title';
-                    }
-                    return null;
-                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,12 +71,9 @@ class RenameCardDialog extends StatelessWidget {
                       },
                     ),
                     DialogBlueButton(
-                      text: "Change",
+                      text: "Delete",
                       onClick: () {
-                        if (_formKey.currentState!.validate()) {
-                          // renameCard(_title.text);
-                          Navigator.of(context).pop();
-                        }
+                        Navigator.of(context).pop();
                       },
                     ),
                   ],

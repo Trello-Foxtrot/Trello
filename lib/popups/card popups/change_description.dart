@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
@@ -6,7 +8,7 @@ import 'package:trello/screens/workspace_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
-class RenameCardDialog extends StatelessWidget {
+class ChangeDescriptionDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
 
@@ -54,29 +56,23 @@ class RenameCardDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 const Padding(
-                  padding: EdgeInsets.only(top: 40),
+                  padding: EdgeInsets.only(top: 30),
                   child: Text(
-                    "Change a Card name",
+                    "Change a Card description",
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                TextFormField(
-                  controller: _title,
-                  keyboardType: TextInputType.name,
-                  autofocus: false,
+                TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
                   decoration: const InputDecoration(
-                    hintText: 'Title',
+                    border: OutlineInputBorder(),
+                    hintText: 'Description',
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a title';
-                    }
-                    return null;
-                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
