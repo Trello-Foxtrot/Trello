@@ -2,9 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/workspace_screen.dart';
+import 'package:trello/globals.dart' as globals;
 
 class CreateBoardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+
+  void addBoard() {
+    Map<String, String> map = <String, String>{};
+    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
+    map['name'] = _titleController.text;
+
+    globals.Session.post(
+      'trello/workspace/boards/add',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +61,7 @@ class CreateBoardDialog extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  controller: _titleController,
                   keyboardType: TextInputType.name,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -73,6 +87,7 @@ class CreateBoardDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
+                          addBoard();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => WorkspaceScreen()),

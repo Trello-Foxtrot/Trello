@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
-import 'package:trello/screens/main_screen.dart';
-import 'package:http/http.dart' as http;
+import 'package:trello/globals.dart' as globals;
 
 class CreateListDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
 
-  // void addList(String name) {
-  //
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['name'] = name;
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/List/add'),
-  //     body: map,
-  //   );
-  // }
+   void addList(String name) {
+     Map<String, String> map = new Map<String, String>();
+     map['board_id'] = globals.CurrentBoard.id.toString();
+     map['name'] = name;
+
+     globals.Session.post(
+       'trello/workspace/boards/lists/add',
+       map,
+     );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +87,7 @@ class CreateListDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          // addList(_titleController.text);
+                          addList(_titleController.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => BoardScreen()),

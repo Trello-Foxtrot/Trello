@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
-import 'package:trello/screens/main_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class DeleteListDialog extends StatelessWidget {
+  final id;
 
-  // void deleteList(BuildContext context) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentList.id.toString();
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/List/delete'),
-  //     body: map,
-  //   ).then((value) =>
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MainScreen()),
-  //       )
-  //   );
-  // }
+  const DeleteListDialog(this.id, {Key? key}) : super(key: key);
+
+  void deleteList() {
+    Map<String, String> map = new Map<String, String>();
+    map['list_id'] = id;
+
+    globals.Session.post(
+      'workspace/boards/lists/delete',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +69,7 @@ class DeleteListDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        // deleteList(context);
+                        deleteList();
                       },
                     ),
                   ],
