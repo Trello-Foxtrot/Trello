@@ -18,7 +18,7 @@ class _BoardScreenState extends State<BoardScreen> {
 
   List<String> list_of_list = ["title 1", "title 2", "title 3"];
   var list_of_cards = [
-    ["card 1.1", "card 1.2", "card 1.3", "card 1.4"],
+    ["card 1.1 card card card card card card card card card card card cardcard card card card card cardcard card card card card cardcard cardcard cardcard", "card 1.2", "card 1.3", "card 1.4"],
     ["card 2.1"],
     [] // empty list
   ];
