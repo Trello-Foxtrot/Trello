@@ -16,7 +16,7 @@ class BoardScreen extends StatefulWidget {
 
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
-
+  
   List<String> list_of_list = [];
   List<String> list_of_listId = [];
   var list_of_cards = [];
