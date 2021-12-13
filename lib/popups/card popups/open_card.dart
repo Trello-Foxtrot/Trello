@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trello/buttons/board_button.dart';
+import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/utils/colors.dart';
 
 class OpenCardDialog extends StatelessWidget {
@@ -7,7 +9,35 @@ class OpenCardDialog extends StatelessWidget {
   String card_title = "Here is a title";
   String description =
       "text text text text text text text text  frrrf frrr frfr frfr frr fr a a a a a a a a a a a a a a a a a xt text text text text text text text ";
-  List<String> list_of_attachments = ["image.png", "qwerty.eps", "profile_12345.zip"];
+  List<String> list_of_attachments = [
+    "imageqwertyuqwertyuiqwertyuiqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyui.png",
+    "qwerty.eps",
+    "profile_12345.zip"
+  ];
+
+  var list_of_comments = [
+    ["111@gmail.com", "text text text”"],
+    ["22@gmail.com", "aaaa"],
+    [
+      "111@gmail.com",
+      "text r r r  r r  r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r rr r  r r r rr r r r  rr r r rr  r r  text text”"
+    ],
+    [
+      "22@gmail.com",
+      "qwertyuiqwertyuiqwertyuiqwertyuioqwertyuiwertyuirtyuirtyui wertyuwertrewqertrewqertt wertyui ertyuiuytrertyuytrtyuyttyuytyuyyuyuyuyuyuyuyyuyu"
+    ],
+    ["111@gmail.com", "text text text”"],
+    ["22@gmail.com", "aaaa"],
+    [
+      "111@gmail.com",
+      "text r r r  r r  r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r rr r  r r r rr r r r  rr r r rr  r r  text text”"
+    ],
+    [
+      "22@gmail.com",
+      "qwertyuiqwertyuiqwertyuiqwertyuioqwertyuiwertyuirtyuirtyui wertyuwertqwehytrewqwertytrewqwer wertyui ertyuiuytrertyuytrtyuyttyuytyuyyuyuyuyuyuyuyyuyu"
+    ],
+    ["333@gmail.com", "abs"]
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +49,7 @@ class OpenCardDialog extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         width: 900,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.98,
+        height: MediaQuery.of(context).size.height * 0.98,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
@@ -40,253 +67,221 @@ class OpenCardDialog extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: const <Widget>[
-                          Icon(Icons.title, color: Colors.grey, size: 40),
-                          SizedBox(
-                            width: 15,
+                child: Container(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 10,
                           ),
-                          Text(
-                            "Title",
-                            style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 55),
-                        child: Text(
-                          card_title,
-                          style: TextStyle(color: darkGrey, fontSize: 18),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: const <Widget>[
-                          Icon(Icons.article_outlined, color: Colors.grey, size: 40),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "Description",
-                            style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 55),
-                        child: Text(
-                          description,
-                          style: TextStyle(color: darkGrey, fontSize: 17),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: const <Widget>[
-                          Icon(Icons.attach_file, color: Colors.grey, size: 40),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "Attachments",
-                            style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 55),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: const [
-                                Text(
-                                  "image.jpg",
-                                  style: TextStyle(color: darkGrey, fontSize: 15),
-                                ),
-                                SizedBox(
-                                  width: 445,
-                                ),
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    "image.png",
-                                    style: TextStyle(color: darkGrey, fontSize: 15), ,
-                                ),
-                                SizedBox(
-                                  width: 440,
-                                ),
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "qwert.file",
-                                ),
-                                SizedBox(
-                                  width: 445,
-                                ),
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: const <Widget>[
-                          Icon(Icons.insert_comment_outlined, color: Colors.grey, size: 40),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "Comments",
-                            style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 55),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "111@gmail.com",
-                            ),
-                            Container(
-                              height: 50,
-                              // width: 550,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      height: 50,
-                                      // width: 500,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue.shade200,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                          'Text Text Text Text Text TextText Text Text Text Text Text Text Text Text Text\n Text Text Text Text Text v')),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Icon(
-                                    Icons.close,
-                                    color: Colors.grey,
-                                  ),
-                                ],
+                          Row(
+                            children: const <Widget>[
+                              Icon(Icons.title, color: Colors.grey, size: 40),
+                              SizedBox(
+                                width: 15,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "113@gmail.com",
+                              Text(
+                                "Title",
+                                style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
+                              ),
+                            ],
                           ),
-                          Container(
-                            height: 100,
-                            // width: 550,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    height: 50,
-                                    // width: 500,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue.shade200,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                        'Text Text Text Text Text TextText Text Text Text Text Text Text Text Text Text\n Text Text Text Text Text Text Text Text Text Text Text Text')),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.grey,
-                                ),
-                              ],
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 55),
+                            child: Text(
+                              card_title,
+                              style: TextStyle(color: darkGrey, fontSize: 18),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: const <Widget>[
+                              Icon(Icons.article_outlined, color: Colors.grey, size: 40),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "Description",
+                                style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 55),
+                            child: Text(
+                              description,
+                              style: TextStyle(color: darkGrey, fontSize: 16, fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            children: const <Widget>[
+                              Icon(Icons.attach_file, color: Colors.grey, size: 40),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "Attachments",
+                                style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            children: List.generate(
+                              list_of_attachments.length,
+                              (index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 55),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        flex: 4,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              list_of_attachments[index],
+                                              style: TextStyle(color: darkGrey, fontSize: 15),
+                                            ),
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 25, right: 15),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.close, color: Colors.grey, size: 25),
+                                                  onPressed: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                          return DeleteListDialog();
+                                                        });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: const <Widget>[
+                              Icon(Icons.insert_comment_outlined, color: Colors.grey, size: 40),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "Comments",
+                                style: TextStyle(color: darkGrey, fontSize: 26, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            children: List.generate(
+                              list_of_comments.length,
+                              (index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 55),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        list_of_comments[index][0],
+                                        style: TextStyle(color: lightGrey, fontSize: 12, fontStyle: FontStyle.italic ),
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 4,
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width,
+                                                  margin: const EdgeInsets.symmetric(vertical: 4),
+                                                  padding: const EdgeInsets.all(6),
+
+                                                  decoration: BoxDecoration(
+                                                    color: lightBlue,
+                                                    borderRadius: BorderRadius.circular(5),
+                                                  ),
+                                                    child: Text(
+                                                      list_of_comments[index][1],
+                                                      style: TextStyle(color: darkGrey, fontSize: 15),
+                                                    ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 1, right: 1),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.close, color: Colors.grey, size: 25),
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return DeleteListDialog();
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "121@gmail.com",
-                          ),
-                          Container(
-                            height: 35,
-                            // width: 550,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    height: 35,
-                                    // width: 500,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue.shade200,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text('Text Text Text Text Text TextText Text ')),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Icon(
-                                  Icons.close,
-                                  color: Colors.grey,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -296,7 +291,7 @@ class OpenCardDialog extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.close,
                         color: Colors.grey,
                         size: 30,
@@ -305,16 +300,12 @@ class OpenCardDialog extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
                       height: 35,
                       width: 200,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     color: Colors.grey
-                      // ),
                       child: ElevatedButton(
                         onPressed: () {
                           // Navigator.of(context).pop();
@@ -331,16 +322,12 @@ class OpenCardDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
                       height: 35,
                       width: 200,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     color: Colors.grey
-                      // ),
                       child: ElevatedButton(
                         onPressed: () {
                           // Navigator.of(context).pop();
@@ -357,16 +344,12 @@ class OpenCardDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
                       height: 35,
                       width: 200,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     color: Colors.grey
-                      // ),
                       child: ElevatedButton(
                         onPressed: () {
                           // Navigator.of(context).pop();
@@ -383,16 +366,12 @@ class OpenCardDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
                       height: 35,
                       width: 200,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     color: Colors.grey
-                      // ),
                       child: ElevatedButton(
                         onPressed: () {
                           // Navigator.of(context).pop();
@@ -409,16 +388,12 @@ class OpenCardDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
                       height: 35,
                       width: 200,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     color: Colors.grey
-                      // ),
                       child: ElevatedButton(
                         onPressed: () {
                           // Navigator.of(context).pop();
@@ -435,12 +410,11 @@ class OpenCardDialog extends StatelessWidget {
                         style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],
                 ),
-                // ),
               )
             ],
           ),
