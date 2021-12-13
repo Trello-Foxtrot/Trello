@@ -1,7 +1,19 @@
+import 'dart:html';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/board_button.dart';
+import 'package:trello/popups/card%20popups/delete_card.dart';
+import 'package:trello/popups/card%20popups/rename_card.dart';
+import 'package:trello/popups/card%20popups/write_comment.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:flutter/widgets.dart';
+import 'change_description.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OpenCardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -38,6 +50,7 @@ class OpenCardDialog extends StatelessWidget {
     ],
     ["333@gmail.com", "abs"]
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +236,7 @@ class OpenCardDialog extends StatelessWidget {
                                     children: [
                                       Text(
                                         list_of_comments[index][0],
-                                        style: TextStyle(color: lightGrey, fontSize: 12, fontStyle: FontStyle.italic ),
+                                        style: TextStyle(color: lightGrey, fontSize: 12, fontStyle: FontStyle.italic),
                                       ),
                                       Row(
                                         children: <Widget>[
@@ -236,15 +249,14 @@ class OpenCardDialog extends StatelessWidget {
                                                   width: MediaQuery.of(context).size.width,
                                                   margin: const EdgeInsets.symmetric(vertical: 4),
                                                   padding: const EdgeInsets.all(6),
-
                                                   decoration: BoxDecoration(
                                                     color: lightBlue,
                                                     borderRadius: BorderRadius.circular(5),
                                                   ),
-                                                    child: Text(
-                                                      list_of_comments[index][1],
-                                                      style: TextStyle(color: darkGrey, fontSize: 15),
-                                                    ),
+                                                  child: Text(
+                                                    list_of_comments[index][1],
+                                                    style: TextStyle(color: darkGrey, fontSize: 15),
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -308,7 +320,11 @@ class OpenCardDialog extends StatelessWidget {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return DeleteCardDialog();
+                              });
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -330,7 +346,11 @@ class OpenCardDialog extends StatelessWidget {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return RenameCardDialog();
+                              });
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -352,7 +372,11 @@ class OpenCardDialog extends StatelessWidget {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ChangeDescriptionDialog();
+                              });
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -373,8 +397,16 @@ class OpenCardDialog extends StatelessWidget {
                       height: 35,
                       width: 200,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // Navigator.of(context).pop();
+                          // FilePickerResult? result = await FilePicker.platform.pickFiles();
+                          // // File file = await FilePicker.getFile();
+                          // // final attachment = SentryAttachment.fromByteData(bytedata);
+                          // if (result != null) {
+                          //   File file = File(result.files.single.path, 2);
+                          // } else {
+                          //   // User canceled the picker
+                          // }
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -396,7 +428,11 @@ class OpenCardDialog extends StatelessWidget {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return WriteComment();
+                              });
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
