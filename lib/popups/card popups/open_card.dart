@@ -1,19 +1,13 @@
-import 'dart:html';
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:trello/buttons/board_button.dart';
+import 'package:trello/popups/card%20popups/delete_attachment.dart';
 import 'package:trello/popups/card%20popups/delete_card.dart';
+import 'package:trello/popups/card%20popups/delete_comment.dart';
 import 'package:trello/popups/card%20popups/rename_card.dart';
 import 'package:trello/popups/card%20popups/write_comment.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/utils/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'change_description.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class OpenCardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -50,7 +44,6 @@ class OpenCardDialog extends StatelessWidget {
     ],
     ["333@gmail.com", "abs"]
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +185,7 @@ class OpenCardDialog extends StatelessWidget {
                                                     showDialog(
                                                         context: context,
                                                         builder: (BuildContext context) {
-                                                          return DeleteListDialog();
+                                                          return DeleteAttachmentDialog();
                                                         });
                                                   },
                                                 ),
@@ -272,7 +265,7 @@ class OpenCardDialog extends StatelessWidget {
                                                     showDialog(
                                                       context: context,
                                                       builder: (BuildContext context) {
-                                                        return DeleteListDialog();
+                                                        return DeleteCommentDialog();
                                                       },
                                                     );
                                                   },
