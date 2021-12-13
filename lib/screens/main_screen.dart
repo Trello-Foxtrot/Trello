@@ -4,7 +4,6 @@ import 'package:trello/buttons/board_button.dart';
 import 'package:trello/popups/workspace%20popups/create_workspace.dart';
 import 'package:trello/screens/workspace_screen.dart';
 import 'package:trello/utils/colors.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class MainScreen extends StatefulWidget {
@@ -22,18 +21,16 @@ class _MainScreenState extends State<MainScreen> {
   List<String> guestWorkspaceID = [];
 
   void updateWorkspacesLists() {
-    http.post(Uri.parse('http://localhost:8000/trello/workspace')).then((response) {
-      Map<String, dynamic> map = response.headers;
+    globals.Session.post(
+      'trello/workspace',
+      <String, String>{}
+    ).then((resMap) {
       setState(() {
-        myWorkSpacesList = map['admin']?.split(',') ?? [];
-        myWorkSpacesList.removeLast();
-        myWorkSpacesIDList = map['admin_id']?.split(',') ?? [];
-        myWorkSpacesIDList.removeLast();
+        myWorkSpacesList = resMap['admin'].cast<String>();
+        myWorkSpacesIDList = resMap['admin_id'].cast<String>();
 
-        guestWorkspace = map['guest']?.split(',') ?? [];
-        guestWorkspace.removeLast();
-        guestWorkspaceID = map['guest_id']?.split(',') ?? [];
-        guestWorkspaceID.removeLast();
+        guestWorkspace = resMap['guest'].cast<String>();
+        guestWorkspaceID = resMap['guest_id'].cast<String>();
       });
     });
   }

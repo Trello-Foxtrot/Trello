@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/utils/colors.dart';
+import 'package:trello/globals.dart' as globals;
 
 import 'login_screen.dart';
 import 'main_screen.dart';
@@ -21,28 +21,25 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _confirmPass = TextEditingController();
 
   void signUpUser() {
-    Map<String, dynamic> map = new Map<String, dynamic>();
+    Map<String, String> map = <String, String>{};
     map['email'] = _email.text;
     map['password'] = _pass.text;
 
-    http
-        .post(
-      Uri.parse('http://localhost:8000/trello/sign_up'),
-      body: map,
-    )
-        .then((response) {
-      Map<String, dynamic> map = response.headers;
-      if (map['email']!.isEmpty) {
+    globals.Session.post(
+      'trello/sign_up',
+      map
+    ).then((resMap) {
+      if (resMap['email'].isEmpty) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MainScreen()),
         );
-      } else {
-        _emailErr = map['email'];
+      }
+      else {
+        _emailErr = resMap['email'];
         _form.currentState!.validate();
         _emailErr = "";
       }
-      return null;
     });
   }
 

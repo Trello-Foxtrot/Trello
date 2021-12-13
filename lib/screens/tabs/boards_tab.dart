@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
 import 'package:trello/globals.dart' as globals;
@@ -13,23 +12,23 @@ class BoardsTab extends StatefulWidget {
 
 class _BoardsTabState extends State<BoardsTab> {
   List<String> boardsList = [];
+  List<String> boardsIdList = [];
 
   _BoardsTabState() {
-    updateBoardsLists();
+    updateBoards();
   }
 
-  void updateBoardsLists() {
-    Map<String, dynamic> map = new Map<String, dynamic>();
-    map['id'] = globals.CurrentWorkspace.id.toString();
+  void updateBoards() {
+    Map<String, String> map = <String, String>{};
+    map['workspace_id'] = globals.CurrentWorkspace.id.toString();
 
-    http.post(
-      Uri.parse('http://localhost:8000/trello/workspace/boards'),
-      body: map,
-    ).then((response) {
-      Map<String, dynamic> map = response.headers;
+    globals.Session.post(
+        'trello/workspace/boards',
+        map,
+    ).then((resMap) {
       setState(() {
-        boardsList = map['boards']?.split(',') ?? [];
-        boardsList.removeLast();
+        boardsList = resMap['boards'].cast<String>();
+        boardsIdList = resMap['boards_id'].cast<String>();
       });
     });
   }
@@ -62,6 +61,9 @@ class _BoardsTabState extends State<BoardsTab> {
                         return BoardButton(
                           text: boardsList[index],
                           onClick: () {
+                            globals.CurrentBoard.id = int.parse(boardsIdList[index]);
+                            globals.CurrentBoard.title = boardsList[index];
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => BoardScreen()),

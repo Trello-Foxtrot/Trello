@@ -7,6 +7,7 @@ import 'package:trello/popups/list%20popups/create_list.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/popups/list%20popups/rename_list.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:trello/globals.dart' as globals;
 
 class BoardScreen extends StatefulWidget {
   @override
@@ -15,61 +16,83 @@ class BoardScreen extends StatefulWidget {
 
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
+  
+  List<String> list_of_list = [];
+  List<String> list_of_listId = [];
+  var list_of_cards = [];
+  var list_of_cardsId = [];
 
-  List<String> list_of_list = ["title 1", "title 2", "title 3"];
-  var list_of_cards = [
-    ["card 1.1 card card card card card card card card card card card cardcard card card card card cardcard card card card card cardcard cardcard cardcard", "card 1.2", "card 1.3", "card 1.4"],
-    ["card 2.1"],
-    [] // empty list
-  ];
+  Future<dynamic> updateBoardsListsAndCards() {
+    Map<String, String> map = <String, String>{};
+    map['board_id'] = globals.CurrentBoard.id.toString();
+
+    Future<dynamic> f = globals.Session.post(
+      'trello/workspace/boards/lists',
+      map,
+    );
+    f.then((resMap) {
+      setState(() {
+        list_of_list = resMap['lists'].cast<String>();
+        list_of_listId = resMap['lists_id'].cast<String>();
+
+        list_of_cards = resMap['cards'];
+        list_of_cardsId = resMap['cards_id'];
+      });
+    });
+
+    return f;
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _contents = List.generate(list_of_list.length, (index) => _buildList(index));
-    _contents.add(DragAndDropList(
-      header: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CreateListDialog();
-                      });
-                });
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  color: lightGrey,
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      'Add another list',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ],
+    _contents = List.empty();
+    updateBoardsListsAndCards().whenComplete(() {
+      _contents = List.generate(list_of_list.length, (index) => _buildList(index));
+      _contents.add(DragAndDropList(
+        header: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CreateListDialog();
+                        });
+                  });
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    color: lightGrey,
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'Add another list',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      children: List.generate(1, (index) => _buildItem("             ")),
-    ));
+          ],
+        ),
+        children: [],
+      ));
+    });
   }
 
   _buildList(int outerIndex) {
@@ -114,7 +137,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return DeleteListDialog();
+                          return DeleteListDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
@@ -123,7 +146,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return RenameListDialog();
+                          return RenameListDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
@@ -246,8 +269,6 @@ class _BoardScreenState extends State<BoardScreen> {
     );
   }
 
-  final ScrollController _scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -273,48 +294,59 @@ class _BoardScreenState extends State<BoardScreen> {
           ),
         ],
       ),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.98,
-        child: Scrollbar(
-          isAlwaysShown: true,
-          controller: _scrollController,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: DragAndDropLists(
-              scrollController: _scrollController,
-              contentsWhenEmpty: const Text(""),
-              children: _contents,
-              onItemReorder: _onItemReorder,
-              onListReorder: _onListReorder,
-              axis: Axis.horizontal,
-              listWidth: 300,
-              listDraggingWidth: 300,
-              listPadding: EdgeInsets.all(20.0),
-              itemDivider: const Divider(
-                thickness: 4,
-                height: 10,
-                color: lightBlue,
-              ),
-              itemDecorationWhileDragging: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xff004269).withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
-              ),
-              listInnerDecoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              lastItemTargetHeight: 2,
-              addLastItemTargetHeightToTop: true,
-              lastListTargetSize: 40,
-            ),
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: DragAndDropLists(
+          contentsWhenEmpty: Text(""),
+          children: _contents,
+          onItemReorder: _onItemReorder,
+          onListReorder: _onListReorder,
+          axis: Axis.horizontal,
+          listWidth: 300,
+          listDraggingWidth: 300,
+          listPadding: EdgeInsets.all(20.0),
+          itemDivider: const Divider(
+            thickness: 4,
+            height: 10,
+            color: lightBlue,
           ),
+          itemDecorationWhileDragging: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff004269).withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 0),
+              ),
+            ],
+          ),
+          listInnerDecoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+          ),
+          lastItemTargetHeight: 2,
+          addLastItemTargetHeightToTop: true,
+          lastListTargetSize: 40,
+          // listDragHandle: const DragHandle(
+          //   verticalAlignment: DragHandleVerticalAlignment.top,
+          //   child: Padding(
+          //     padding: EdgeInsets.only(right: 10, top: 8),
+          //     child: Icon(
+          //       Icons.menu,
+          //       color: Colors.black26,
+          //     ),
+          //   ),
+          // ),
+          // itemDragHandle: const DragHandle(
+          //   child: Padding(
+          //     padding: EdgeInsets.only(right: 10),
+          //     child: Icon(
+          //       Icons.menu,
+          //       color: Color(0xff262f39),
+          //     ),
+          //   ),
+          // ),
         ),
       ),
     );
