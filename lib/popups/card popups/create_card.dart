@@ -2,10 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
-import 'package:trello/screens/workspace_screen.dart';
+import 'package:trello/globals.dart' as globals;
 
 class CreateCardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final String listId;
+
+  CreateCardDialog(this.listId);
+
+  void addCard(String name) {
+    Map<String, String> map = new Map<String, String>();
+    map['list_id'] = listId;
+    map['name'] = name;
+
+    globals.Session.post(
+      'trello/workspace/boards/lists/cards/add',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +64,7 @@ class CreateCardDialog extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  controller: _titleController,
                   keyboardType: TextInputType.name,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -73,6 +89,7 @@ class CreateCardDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Create",
                       onClick: () {
+                        addCard(_titleController.text);
                         if (_formKey.currentState!.validate()) {
                           Navigator.push(
                             context,

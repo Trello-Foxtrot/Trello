@@ -128,7 +128,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return CreateCardDialog();
+                          return CreateCardDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
@@ -195,7 +195,7 @@ class _BoardScreenState extends State<BoardScreen> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return CreateCardDialog();
+                        return CreateCardDialog(list_of_listId[outerIndex]);
                       });
                 });
               },
