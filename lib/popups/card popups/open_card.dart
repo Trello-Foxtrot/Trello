@@ -1,20 +1,31 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:trello/popups/card%20popups/delete_attachment.dart';
 import 'package:trello/popups/card%20popups/delete_card.dart';
 import 'package:trello/popups/card%20popups/delete_comment.dart';
 import 'package:trello/popups/card%20popups/rename_card.dart';
 import 'package:trello/popups/card%20popups/write_comment.dart';
-import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/utils/colors.dart';
-import 'package:flutter/widgets.dart';
+
 import 'change_description.dart';
 
-class OpenCardDialog extends StatelessWidget {
+class OpenCardDialog extends StatefulWidget {
+  @override
+  State<OpenCardDialog> createState() => _OpenCardDialogState();
+}
+
+class _OpenCardDialogState extends State<OpenCardDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String card_title = "Here is a title";
+
   String description =
       "text text text text text text text text  frrrf frrr frfr frfr frr fr a a a a a a a a a a a a a a a a a xt text text text text text text text ";
+
   List<String> list_of_attachments = [
     "imageqwertyuqwertyuiqwertyuiqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyui.png",
     "qwerty.eps",
@@ -44,6 +55,35 @@ class OpenCardDialog extends StatelessWidget {
     ],
     ["333@gmail.com", "abs"]
   ];
+
+  late DateTime selectedDate;
+
+  DateTime? card_date = null;
+
+  DateFormat dateFormat = DateFormat.yMMMd('en_US');
+
+  bool isChecked = false;
+
+  _selectDate(BuildContext context) async {
+    // TODO tutaj jest wybierana data
+    if (card_date != null) {
+      selectedDate = card_date!;
+    } else {
+      selectedDate = DateTime.now();
+    }
+    selectedDate = (await showDatePicker(
+      context: context,
+      initialDate: selectedDate, // Refer step 1
+      firstDate: DateTime(2010),
+      lastDate: DateTime(2030),
+    ))!;
+    if (card_date != selectedDate) {
+      setState(() {
+        card_date = selectedDate;
+      });
+    }
+    // print(card_date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +142,66 @@ class OpenCardDialog extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 55),
                             child: Text(
                               card_title,
-                              style: TextStyle(color: darkGrey, fontSize: 18),
+                              style: const TextStyle(color: darkGrey, fontSize: 18),
                             ),
                           ),
+                          if (card_date != null)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 55, top: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "Due date",
+                                      style: TextStyle(color: darkGrey, fontSize: 12, fontStyle: FontStyle.normal),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 7,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                        checkColor: Colors.white,
+                                        // fillColor: MaterialStateProperty.resolveWith(getColor),
+                                        value: isChecked,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            isChecked = value!;
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      TextButton(
+                                        onPressed: () => _selectDate(context),
+                                        child: Text(
+                                          dateFormat.format(card_date!),
+                                          style: const TextStyle(color: darkGrey, fontSize: 16, fontStyle: FontStyle.normal),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                            primary: isChecked == true
+                                                ? Colors.green.shade100
+                                                : (card_date!.isBefore(DateTime.now()) ? Colors.red.shade100 : Colors.grey[100])),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.close, color: Colors.grey, size: 20),
+                                        onPressed: () {
+                                          // TODO delete date
+                                          setState(() {
+                                            card_date = null;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -127,7 +224,7 @@ class OpenCardDialog extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 55),
                             child: Text(
                               description,
-                              style: TextStyle(color: darkGrey, fontSize: 16, fontStyle: FontStyle.italic),
+                              style: const TextStyle(color: darkGrey, fontSize: 16, fontStyle: FontStyle.italic),
                             ),
                           ),
                           const SizedBox(
@@ -163,7 +260,7 @@ class OpenCardDialog extends StatelessWidget {
                                           children: [
                                             Text(
                                               list_of_attachments[index],
-                                              style: TextStyle(color: darkGrey, fontSize: 15),
+                                              style: const TextStyle(color: darkGrey, fontSize: 15),
                                             ),
                                             const SizedBox(
                                               width: 15,
@@ -390,16 +487,38 @@ class OpenCardDialog extends StatelessWidget {
                       height: 35,
                       width: 200,
                       child: ElevatedButton(
+                        onPressed: () => _selectDate(context),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Text(
+                              'Pick a date',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 35,
+                      width: 200,
+                      child: ElevatedButton(
                         onPressed: () async {
-                          // Navigator.of(context).pop();
-                          // FilePickerResult? result = await FilePicker.platform.pickFiles();
-                          // // File file = await FilePicker.getFile();
-                          // // final attachment = SentryAttachment.fromByteData(bytedata);
-                          // if (result != null) {
-                          //   File file = File(result.files.single.path, 2);
-                          // } else {
-                          //   // User canceled the picker
-                          // }
+                          // TODO - ATTACHMENT - FILE PICKER
+                          // TODO - to działa, teraz trzeba to obsłużyć
+                          FilePickerResult? result = await FilePicker.platform.pickFiles();
+                          if (result != null) {
+                            String? path = result.files.single.path;
+                            if (path != null) {
+                              File file = File(path);
+                            }
+                          } else {
+                            // User canceled the picker
+                          }
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
