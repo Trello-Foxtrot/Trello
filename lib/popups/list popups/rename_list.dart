@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
-import 'package:trello/screens/workspace_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class RenameListDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
+  final id;
 
-  // void renameList(String name) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentList.id.toString();
-  //   map['new_name'] = name;
-  //   globals.CurrentList.title = name;
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/List/rename'),
-  //     body: map,
-  //   );
-  // }
+  RenameListDialog(this.id, {Key? key}) : super(key: key);
+
+  void renameList(String name) {
+    Map<String, String> map = new Map<String, String>();
+    map['list_id'] = id;
+    map['new_name'] = name;
+
+    globals.Session.post(
+      'workspace/boards/lists/rename',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class RenameListDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          // renameList(_title.text);
+                          renameList(_title.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => BoardScreen()),

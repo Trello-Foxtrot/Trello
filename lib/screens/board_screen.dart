@@ -9,6 +9,7 @@ import 'package:trello/popups/list%20popups/create_list.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/popups/list%20popups/rename_list.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:trello/globals.dart' as globals;
 
 class BoardScreen extends StatefulWidget {
   @override
@@ -18,53 +19,78 @@ class BoardScreen extends StatefulWidget {
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
 
-  List<String> list_of_list = ["title 1", "title 2", "title 3"];
-  var list_of_cards = [
-    ["card 1.1", "card 1.2", "card 1.3", "card 1.4"],
-    ["card 2.1"],
-    [] // empty list
-  ];
+
   String title = 'Fofofo fofof';
+
+  List<String> list_of_list = [];
+  List<String> list_of_listId = [];
+  var list_of_cards = [];
+  var list_of_cardsId = [];
+
+  Future<dynamic> updateBoardsListsAndCards() {
+    Map<String, String> map = <String, String>{};
+    map['board_id'] = globals.CurrentBoard.id.toString();
+
+    Future<dynamic> f = globals.Session.post(
+      'trello/workspace/boards/lists',
+      map,
+    );
+    f.then((resMap) {
+      setState(() {
+        list_of_list = resMap['lists'].cast<String>();
+        list_of_listId = resMap['lists_id'].cast<String>();
+
+        list_of_cards = resMap['cards'];
+        list_of_cardsId = resMap['cards_id'];
+      });
+    });
+
+    return f;
+  }
+
 
   @override
   void initState() {
     super.initState();
 
-    _contents = List.generate(list_of_list.length, (index) => _buildList(index));
-    _contents.add(DragAndDropList(
-      header: Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return CreateListDialog();
-                      });
-                });
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  color: lightGrey,
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Row(
-                  children: const [
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      'Add another list',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ],
+    _contents = List.empty();
+    updateBoardsListsAndCards().whenComplete(() {
+      _contents = List.generate(list_of_list.length, (index) => _buildList(index));
+      _contents.add(DragAndDropList(
+        header: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CreateListDialog();
+                        });
+                  });
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    color: lightGrey,
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'Add another list',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -117,7 +143,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return DeleteListDialog();
+                          return DeleteListDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
@@ -126,7 +152,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return RenameListDialog();
+                          return RenameListDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
