@@ -191,14 +191,10 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                       IconButton(
                                         icon: const Icon(Icons.close, color: Colors.grey, size: 20),
                                         onPressed: () {
+                                          // TODO delete date
                                           setState(() {
                                             card_date = null;
                                           });
-                                          // showDialog(
-                                          //     context: context,
-                                          //     builder: (BuildContext context) {
-                                          //       return DeleteAttachmentDialog();
-                                          //     });
                                         },
                                       ),
                                     ],
