@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.4
 
   drag_and_drop_lists: ^0.3.2+2
-  file_picker: ^4.2.7
+  file_picker: 4.3.0
 
   http: 0.13.4
 
