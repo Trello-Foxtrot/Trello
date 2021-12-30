@@ -1,10 +1,14 @@
+// import 'dart:html';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:trello/popups/card%20popups/delete_attachment.dart';
 import 'package:trello/popups/card%20popups/delete_card.dart';
 import 'package:trello/popups/card%20popups/delete_comment.dart';
 import 'package:trello/popups/card%20popups/rename_card.dart';
 import 'package:trello/popups/card%20popups/write_comment.dart';
-import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/utils/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'change_description.dart';
@@ -391,15 +395,17 @@ class OpenCardDialog extends StatelessWidget {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // Navigator.of(context).pop();
-                          // FilePickerResult? result = await FilePicker.platform.pickFiles();
-                          // // File file = await FilePicker.getFile();
-                          // // final attachment = SentryAttachment.fromByteData(bytedata);
-                          // if (result != null) {
-                          //   File file = File(result.files.single.path, 2);
-                          // } else {
-                          //   // User canceled the picker
-                          // }
+                          // TODO - ATTACHMENT - FILE PICKER
+                          // TODO - to działa, teraz trzeba to obsłużyć
+                          FilePickerResult? result = await FilePicker.platform.pickFiles();
+                          if (result != null) {
+                            String? path = result.files.single.path;
+                            if (path != null) {
+                              File file = File(path);
+                            }
+                          } else {
+                            // User canceled the picker
+                          }
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
