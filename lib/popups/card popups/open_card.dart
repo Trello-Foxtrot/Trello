@@ -188,6 +188,19 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                                 ? Colors.green.shade100
                                                 : (card_date!.isBefore(DateTime.now()) ? Colors.red.shade100 : Colors.grey[100])),
                                       ),
+                                      IconButton(
+                                        icon: const Icon(Icons.close, color: Colors.grey, size: 20),
+                                        onPressed: () {
+                                          setState(() {
+                                            card_date = null;
+                                          });
+                                          // showDialog(
+                                          //     context: context,
+                                          //     builder: (BuildContext context) {
+                                          //       return DeleteAttachmentDialog();
+                                          //     });
+                                        },
+                                      ),
                                     ],
                                   ),
                                 ],
