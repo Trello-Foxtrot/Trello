@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:trello/popups/card%20popups/delete_attachment.dart';
@@ -84,22 +85,22 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
     }
     // print(card_date);
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(50),
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       child: Container(
-        width: 900,
-        height: MediaQuery.of(context).size.height * 0.98,
+        width: 400,
+        height: 350,
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(50),
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
@@ -386,20 +387,26 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                TextFormField(
+                  keyboardType: TextInputType.name,
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    hintText: 'Title',
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a title';
+                    }
+                    return null;
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.close,
-                        color: Colors.grey,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
+                    CancelButton(
+                      onClick: () {
+                        Navigator.of(context).pop();
                       },
                     ),
                     const SizedBox(
@@ -563,8 +570,8 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                     ),
                   ],
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

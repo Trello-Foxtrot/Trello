@@ -18,8 +18,7 @@ class BoardScreen extends StatefulWidget {
 
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
-
-
+  
   String title = 'Fofofo fofof';
 
   List<String> list_of_list = [];
@@ -94,11 +93,11 @@ class _BoardScreenState extends State<BoardScreen> {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      children: List.generate(1, (index) => _buildItem("             ")),
-    ));
+          ],
+        ),
+        children: [],
+      ));
+    });
   }
 
   _buildList(int outerIndex) {
@@ -134,7 +133,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return CreateCardDialog();
+                          return CreateCardDialog(list_of_listId[outerIndex]);
                         });
                   });
                 }
@@ -201,7 +200,7 @@ class _BoardScreenState extends State<BoardScreen> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return CreateCardDialog();
+                        return CreateCardDialog(list_of_listId[outerIndex]);
                       });
                 });
               },
@@ -274,8 +273,6 @@ class _BoardScreenState extends State<BoardScreen> {
       ),
     );
   }
-
-  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

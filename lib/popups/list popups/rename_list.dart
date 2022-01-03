@@ -17,7 +17,7 @@ class RenameListDialog extends StatelessWidget {
     map['new_name'] = name;
 
     globals.Session.post(
-      'workspace/boards/lists/rename',
+      'trello/workspace/boards/lists/rename',
       map,
     );
   }
