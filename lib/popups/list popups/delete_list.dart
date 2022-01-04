@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/globals.dart' as globals;
-import 'package:trello/screens/board_screen.dart';
 
 class DeleteListDialog extends StatelessWidget {
   final id;
@@ -14,7 +13,7 @@ class DeleteListDialog extends StatelessWidget {
     map['list_id'] = id;
 
     globals.Session.post(
-      'trello/workspace/boards/lists/delete',
+      'workspace/boards/lists/delete',
       map,
     );
   }
@@ -71,10 +70,6 @@ class DeleteListDialog extends StatelessWidget {
                       text: "Delete",
                       onClick: () {
                         deleteList();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BoardScreen()),
-                        );
                       },
                     ),
                   ],
