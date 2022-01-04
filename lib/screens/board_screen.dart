@@ -1,6 +1,7 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:trello/globals.dart' as globals;
 import 'package:trello/popups/board%20popups/delete_board_popup.dart';
 import 'package:trello/popups/board%20popups/rename_board_popup.dart';
 import 'package:trello/popups/card%20popups/create_card.dart';
@@ -9,7 +10,6 @@ import 'package:trello/popups/list%20popups/create_list.dart';
 import 'package:trello/popups/list%20popups/delete_list.dart';
 import 'package:trello/popups/list%20popups/rename_list.dart';
 import 'package:trello/utils/colors.dart';
-import 'package:trello/globals.dart' as globals;
 
 class BoardScreen extends StatefulWidget {
   @override
@@ -18,7 +18,6 @@ class BoardScreen extends StatefulWidget {
 
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
-
 
   String title = 'Fofofo fofof';
 
@@ -47,7 +46,6 @@ class _BoardScreenState extends State<BoardScreen> {
 
     return f;
   }
-
 
   @override
   void initState() {
@@ -94,11 +92,11 @@ class _BoardScreenState extends State<BoardScreen> {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      children: List.generate(1, (index) => _buildItem("             ")),
-    ));
+          ],
+        ),
+        children: List.generate(1, (index) => _buildItem("             ")),
+      ));
+    });
   }
 
   _buildList(int outerIndex) {
