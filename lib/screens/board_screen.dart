@@ -1,8 +1,6 @@
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:trello/popups/board%20popups/delete_board_popup.dart';
-import 'package:trello/popups/board%20popups/rename_board_popup.dart';
 import 'package:trello/popups/card%20popups/create_card.dart';
 import 'package:trello/popups/card%20popups/open_card.dart';
 import 'package:trello/popups/list%20popups/create_list.dart';
@@ -19,8 +17,6 @@ class BoardScreen extends StatefulWidget {
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
   
-  String title = 'Fofofo fofof';
-
   List<String> list_of_list = [];
   List<String> list_of_listId = [];
   var list_of_cards = [];
@@ -46,7 +42,6 @@ class _BoardScreenState extends State<BoardScreen> {
 
     return f;
   }
-
 
   @override
   void initState() {
@@ -299,137 +294,60 @@ class _BoardScreenState extends State<BoardScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
+      body: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: DragAndDropLists(
+          contentsWhenEmpty: Text(""),
+          children: _contents,
+          onItemReorder: _onItemReorder,
+          onListReorder: _onListReorder,
+          axis: Axis.horizontal,
+          listWidth: 300,
+          listDraggingWidth: 300,
+          listPadding: EdgeInsets.all(20.0),
+          itemDivider: const Divider(
+            thickness: 4,
+            height: 10,
             color: lightBlue,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 20, top: 20, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 25,
-                      ),
-                      const Icon(
-                        Icons.tv,
-                        color: darkBlue,
-                        size: 40,
-                      ),
-                      const SizedBox(
-                        width: 25,
-                      ),
-                      Text(
-                        title,
-                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 135,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return RenameBoardDialog();
-                                });
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(3.0),
-                            child: Center(
-                              child: Text(
-                                'Change title',
-                                style: TextStyle(color: Colors.white, fontSize: 16),
-                              ),
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        height: 40,
-                        width: 100,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return DeleteBoardDialog();
-                                });
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(3.0),
-                            child: Center(
-                              child: Text(
-                                'Delete',
-                                style: TextStyle(color: Colors.white, fontSize: 16),
-                              ),
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(primary: lightGrey, shape: const StadiumBorder()),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: _scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: DragAndDropLists(
-                  scrollController: _scrollController,
-                  contentsWhenEmpty: const Text(""),
-                  children: _contents,
-                  onItemReorder: _onItemReorder,
-                  onListReorder: _onListReorder,
-                  axis: Axis.horizontal,
-                  listWidth: 300,
-                  listDraggingWidth: 300,
-                  listPadding: EdgeInsets.all(20.0),
-                  itemDivider: const Divider(
-                    thickness: 4,
-                    height: 10,
-                    color: lightBlue,
-                  ),
-                  itemDecorationWhileDragging: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff004269).withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 3,
-                        offset: const Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  listInnerDecoration: BoxDecoration(
-                    color: Theme.of(context).canvasColor,
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  lastItemTargetHeight: 2,
-                  addLastItemTargetHeightToTop: true,
-                  lastListTargetSize: 40,
-                ),
+          itemDecorationWhileDragging: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xff004269).withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: const Offset(0, 0),
               ),
-            ),
+            ],
           ),
-        ],
+          listInnerDecoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.all(Radius.circular(5)),
+          ),
+          lastItemTargetHeight: 2,
+          addLastItemTargetHeightToTop: true,
+          lastListTargetSize: 40,
+          // listDragHandle: const DragHandle(
+          //   verticalAlignment: DragHandleVerticalAlignment.top,
+          //   child: Padding(
+          //     padding: EdgeInsets.only(right: 10, top: 8),
+          //     child: Icon(
+          //       Icons.menu,
+          //       color: Colors.black26,
+          //     ),
+          //   ),
+          // ),
+          // itemDragHandle: const DragHandle(
+          //   child: Padding(
+          //     padding: EdgeInsets.only(right: 10),
+          //     child: Icon(
+          //       Icons.menu,
+          //       color: Color(0xff262f39),
+          //     ),
+          //   ),
+          // ),
+        ),
       ),
     );
   }
