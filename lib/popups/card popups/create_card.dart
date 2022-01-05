@@ -98,7 +98,7 @@ class CreateCardDialog extends StatelessWidget {
                               MaterialPageRoute(
                               builder: (context) => BoardScreen()),
                             )
-                          })
+                          });
                         }
                       },
                     ),
