@@ -8,20 +8,15 @@ import 'package:trello/screens/workspace_screen.dart';
 
 class DeleteBoardDialog extends StatelessWidget {
 
-  // void deleteBoard(BuildContext context) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentBoard.id.toString();
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/board/delete'),
-  //     body: map,
-  //   ).then((value) =>
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MainScreen()),
-  //       )
-  //   );
-  // }
+  Future<dynamic> deleteBoard() {
+    Map<String, String> map = new Map<String, String>();
+    map['board_id'] = globals.CurrentBoard.id.toString();
+
+    return globals.Session.post(
+      'trello/workspace/boards/delete',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +69,12 @@ class DeleteBoardDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        // deleteBoard(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => WorkspaceScreen()),
-                        );
+                        deleteBoard().then((value) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WorkspaceScreen()),
+                          )
+                        });
                       },
                     ),
                   ],

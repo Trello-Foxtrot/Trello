@@ -11,12 +11,12 @@ class RenameListDialog extends StatelessWidget {
 
   RenameListDialog(this.id, {Key? key}) : super(key: key);
 
-  void renameList(String name) {
+  Future<dynamic> renameList(String name) {
     Map<String, String> map = new Map<String, String>();
     map['list_id'] = id;
     map['new_name'] = name;
 
-    globals.Session.post(
+    return globals.Session.post(
       'workspace/boards/lists/rename',
       map,
     );
@@ -90,10 +90,12 @@ class RenameListDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          renameList(_title.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
+                          renameList(_title.text).then((value) => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => BoardScreen()),
+                              )
+                            }
                           );
                         }
                       },

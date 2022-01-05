@@ -10,17 +10,17 @@ class RenameBoardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
 
-  // void renameBoard(String name) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentBoard.id.toString();
-  //   map['new_name'] = name;
-  //   globals.CurrentBoard.title = name;
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/board/rename'),
-  //     body: map,
-  //   );
-  // }
+  Future<dynamic> renameBoard(String name) {
+    Map<String, String> map = new Map<String, String>();
+    map['board_id'] = globals.CurrentBoard.id.toString();
+    map['new_name'] = name;
+    globals.CurrentBoard.title = name;
+
+    return globals.Session.post(
+      'trello/workspace/boards/rename',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +90,12 @@ class RenameBoardDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          // renameBoard(_title.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
-                          );
+                          renameBoard(_title.text).then((value) => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => BoardScreen()),
+                            )
+                          });
                         }
                       },
                     ),

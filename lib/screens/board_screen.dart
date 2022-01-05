@@ -12,6 +12,7 @@ import 'package:trello/popups/list%20popups/rename_list.dart';
 import 'package:trello/utils/colors.dart';
 
 class BoardScreen extends StatefulWidget {
+
   @override
   _BoardScreenState createState() => _BoardScreenState();
 }
@@ -19,7 +20,7 @@ class BoardScreen extends StatefulWidget {
 class _BoardScreenState extends State<BoardScreen> {
   late List<DragAndDropList> _contents;
 
-  String title = 'Fofofo fofof';
+  String title = globals.CurrentBoard.title;
 
   List<String> list_of_list = [];
   List<String> list_of_listId = [];
