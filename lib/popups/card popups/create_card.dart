@@ -2,10 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
+import 'package:trello/globals.dart' as globals;
 import 'package:trello/screens/workspace_screen.dart';
 
 class CreateCardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  String list_id;
+
+  CreateCardDialog(this.list_id, {Key? key}) : super(key: key);
+
+  Future<dynamic> addCard(String name) {
+    Map<String, String> map = new Map<String, String>();
+    map['list_id'] = list_id;
+    map['name'] = name;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/add',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +65,13 @@ class CreateCardDialog extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  controller: _titleController,
                   keyboardType: TextInputType.name,
                   autofocus: false,
                   decoration: const InputDecoration(
                     hintText: 'Title',
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    contentPadding: EdgeInsets.fromLTRB(
+                        20.0, 10.0, 20.0, 10.0),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -74,10 +92,13 @@ class CreateCardDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
-                          );
+                          addCard(_titleController.text).then((value) => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (context) => BoardScreen()),
+                            )
+                          })
                         }
                       },
                     ),
