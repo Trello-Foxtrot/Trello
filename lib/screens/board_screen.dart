@@ -258,7 +258,7 @@ class _BoardScreenState extends State<BoardScreen> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return OpenCardDialog(cardId);
+                      return OpenCardDialog(cardId, text);
                     });
               });
             },

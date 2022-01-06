@@ -12,17 +12,21 @@ class WriteComment extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _comment = TextEditingController();
 
-  // void renameCard(String name) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentCard.id.toString();
-  //   map['new_name'] = name;
-  //   globals.CurrentCard.comment = name;
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/card/rename'),
-  //     body: map,
-  //   );
-  // }
+  final String cardId;
+
+  WriteComment(this.cardId, {Key? key}) : super(key: key);
+
+  Future<dynamic> addComment(String comment) {
+    Map<String, String> map = new Map<String, String>();
+
+    map['card_id'] = cardId;
+    map['new_comment'] = comment;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/comments/add',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,7 @@ class WriteComment extends StatelessWidget {
                       text: "Send",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          // renameCard(_comment.text);
+                          addComment(_comment.text);
                           Navigator.of(context).pop();
                         }
                       },

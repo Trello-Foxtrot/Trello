@@ -5,24 +5,26 @@ import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
 import 'package:trello/screens/workspace_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class ChangeDescriptionDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
+  final String cardId;
 
-  // void renameCard(String name) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentCard.id.toString();
-  //   map['new_name'] = name;
-  //   globals.CurrentCard.title = name;
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/card/rename'),
-  //     body: map,
-  //   );
-  // }
+  ChangeDescriptionDialog(this.cardId, {Key? key}) : super(key: key);
+
+  Future<dynamic> setDescription(String description) {
+    Map<String, String> map = new Map<String, String>();
+
+    map['card_id'] = cardId;
+    map['new_description'] = description;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/redescribe',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class ChangeDescriptionDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          // renameCard(_title.text);
+                          setDescription(_title.text);
                           Navigator.of(context).pop();
                         }
                       },

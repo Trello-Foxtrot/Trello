@@ -3,7 +3,6 @@ import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
 import 'package:trello/screens/main_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class DeleteCommentDialog extends StatelessWidget {

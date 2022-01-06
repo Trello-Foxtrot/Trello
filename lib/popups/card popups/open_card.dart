@@ -10,13 +10,15 @@ import 'package:trello/popups/card%20popups/delete_comment.dart';
 import 'package:trello/popups/card%20popups/rename_card.dart';
 import 'package:trello/popups/card%20popups/write_comment.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:trello/globals.dart' as globals;
 
 import 'change_description.dart';
 
 class OpenCardDialog extends StatefulWidget {
   String cardId;
+  String title;
 
-  OpenCardDialog(this.cardId, {Key? key}) : super(key: key);
+  OpenCardDialog(this.cardId, this.title, {Key? key}) : super(key: key);
 
   @override
   State<OpenCardDialog> createState() => _OpenCardDialogState();
@@ -25,40 +27,10 @@ class OpenCardDialog extends StatefulWidget {
 class _OpenCardDialogState extends State<OpenCardDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String card_title = "Here is a title";
+  List<String> list_of_attachments = [];
 
-  String description =
-      "text text text text text text text text  frrrf frrr frfr frfr frr fr a a a a a a a a a a a a a a a a a xt text text text text text text text ";
-
-  List<String> list_of_attachments = [
-    "imageqwertyuqwertyuiqwertyuiqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyuioqwertyui.png",
-    "qwerty.eps",
-    "profile_12345.zip"
-  ];
-
-  var list_of_comments = [
-    ["111@gmail.com", "text text text”"],
-    ["22@gmail.com", "aaaa"],
-    [
-      "111@gmail.com",
-      "text r r r  r r  r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r rr r  r r r rr r r r  rr r r rr  r r  text text”"
-    ],
-    [
-      "22@gmail.com",
-      "qwertyuiqwertyuiqwertyuiqwertyuioqwertyuiwertyuirtyuirtyui wertyuwertrewqertrewqertt wertyui ertyuiuytrertyuytrtyuyttyuytyuyyuyuyuyuyuyuyyuyu"
-    ],
-    ["111@gmail.com", "text text text”"],
-    ["22@gmail.com", "aaaa"],
-    [
-      "111@gmail.com",
-      "text r r r  r r  r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r rr r  r r r rr r r r  rr r r rr  r r  text text”"
-    ],
-    [
-      "22@gmail.com",
-      "qwertyuiqwertyuiqwertyuiqwertyuioqwertyuiwertyuirtyuirtyui wertyuwertqwehytrewqwertytrewqwer wertyui ertyuiuytrertyuytrtyuyttyuytyuyyuyuyuyuyuyuyyuyu"
-    ],
-    ["333@gmail.com", "abs"]
-  ];
+  var list_of_comments;
+  String description = "";
 
   late DateTime selectedDate;
 
@@ -67,6 +39,25 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
   DateFormat dateFormat = DateFormat.yMMMd('en_US');
 
   bool isChecked = false;
+
+  Future<dynamic> getCardData() {
+    Map<String, String> map = new Map<String, String>();
+
+    Future<dynamic> f = globals.Session.post(
+      'trello/workspace/boards/lists/cards/comments',
+      map,
+    );
+
+    f.then((resMap) => {
+      setState(() {
+        list_of_comments = resMap['comments'];
+        description = resMap['description'];
+        list_of_attachments = resMap['attachments'];
+      })
+    });
+
+    return f;
+  }
 
   _selectDate(BuildContext context) async {
     // TODO tutaj jest wybierana data
@@ -145,7 +136,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                           Padding(
                             padding: const EdgeInsets.only(left: 55),
                             child: Text(
-                              card_title,
+                              widget.title,
                               style: const TextStyle(color: darkGrey, fontSize: 18),
                             ),
                           ),
@@ -469,7 +460,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return ChangeDescriptionDialog();
+                                return ChangeDescriptionDialog(widget.cardId);
                               });
                         },
                         child: const Padding(
@@ -547,7 +538,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return WriteComment();
+                                return WriteComment(widget.cardId);
                               });
                         },
                         child: const Padding(
