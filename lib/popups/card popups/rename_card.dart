@@ -20,7 +20,7 @@ class RenameCardDialog extends StatelessWidget {
     map['new_name'] = name;
 
     return globals.Session.post(
-      'trello/workspace/boards/lists/cards/delete',
+      'trello/workspace/boards/lists/cards/rename',
       map,
     );
   }
