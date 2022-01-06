@@ -10,17 +10,20 @@ class RenameCardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
 
-  // void renameCard(String name) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentCard.id.toString();
-  //   map['new_name'] = name;
-  //   globals.CurrentCard.title = name;
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/card/rename'),
-  //     body: map,
-  //   );
-  // }
+  String cardId;
+
+  RenameCardDialog(this.cardId, {Key? key}) : super(key: key);
+
+  Future<dynamic> renameCard(String name) {
+    Map<String, String> map = new Map<String, String>();
+    map['card_id'] = cardId;
+    map['new_name'] = name;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/delete',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +93,12 @@ class RenameCardDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          // renameCard(_title.text);
-                          Navigator.of(context).pop();
+                          renameCard(_title.text).then((value) => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => BoardScreen()),
+                            )
+                          });
                         }
                       },
                     ),

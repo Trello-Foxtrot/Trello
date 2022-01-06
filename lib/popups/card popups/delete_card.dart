@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
-import 'package:trello/screens/main_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class DeleteCardDialog extends StatelessWidget {
-  // void deletecard(BuildContext context) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.Currentcard.id.toString();
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/card/delete'),
-  //     body: map,
-  //   ).then((value) =>
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MainScreen()),
-  //       )
-  //   );
-  // }
+  String cardId;
+
+  DeleteCardDialog(this.cardId, {Key? key}) : super(key: key);
+
+  Future<dynamic> deleteCard() {
+    Map<String, String> map = new Map<String, String>();
+    map['card_id'] = cardId;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/delete',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +70,12 @@ class DeleteCardDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BoardScreen()),
-                        );
+                        deleteCard().then((value) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BoardScreen()),
+                          )
+                        });
                       },
                     ),
                   ],

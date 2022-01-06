@@ -14,6 +14,10 @@ import 'package:trello/utils/colors.dart';
 import 'change_description.dart';
 
 class OpenCardDialog extends StatefulWidget {
+  String cardId;
+
+  OpenCardDialog(this.cardId, {Key? key}) : super(key: key);
+
   @override
   State<OpenCardDialog> createState() => _OpenCardDialogState();
 }
@@ -413,7 +417,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return DeleteCardDialog();
+                                return DeleteCardDialog(widget.cardId);
                               });
                         },
                         child: const Padding(
@@ -439,7 +443,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return RenameCardDialog();
+                                return RenameCardDialog(widget.cardId);
                               });
                         },
                         child: const Padding(

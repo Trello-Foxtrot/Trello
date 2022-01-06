@@ -95,7 +95,7 @@ class _BoardScreenState extends State<BoardScreen> {
             ),
           ],
         ),
-        children: List.generate(1, (index) => _buildItem("             ")),
+        children: List.generate(1, (index) => _buildItem("", "             ")),
       ));
     });
   }
@@ -241,11 +241,14 @@ class _BoardScreenState extends State<BoardScreen> {
         thickness: 10,
       ),
       children:
-          List.generate(list_of_cards[outerIndex].length, (index) => _buildItem(list_of_cards[outerIndex][index].toString())),
+          List.generate(list_of_cards[outerIndex].length, (index) => _buildItem(
+              list_of_cardsId[outerIndex][index],
+              list_of_cards[outerIndex][index].toString()
+          )),
     );
   }
 
-  _buildItem(String text) {
+  _buildItem(String cardId, String text) {
     return DragAndDropItem(
       child: Row(
         children: [
@@ -255,7 +258,7 @@ class _BoardScreenState extends State<BoardScreen> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return OpenCardDialog();
+                      return OpenCardDialog(cardId);
                     });
               });
             },
