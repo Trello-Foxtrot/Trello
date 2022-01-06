@@ -14,7 +14,7 @@ class DeleteListDialog extends StatelessWidget {
     map['list_id'] = id;
 
     return globals.Session.post(
-      'workspace/boards/lists/delete',
+      'trello/workspace/boards/lists/delete',
       map,
     );
   }
