@@ -3,24 +3,21 @@ import 'package:trello/buttons/blue_button.dart';
 import 'package:trello/buttons/cancel_button.dart';
 import 'package:trello/screens/board_screen.dart';
 import 'package:trello/screens/main_screen.dart';
-import 'package:http/http.dart' as http;
 import 'package:trello/globals.dart' as globals;
 
 class DeleteAttachmentDialog extends StatelessWidget {
-  // void deleteAttachment(BuildContext context) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentAttachment.id.toString();
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/Attachment/delete'),
-  //     body: map,
-  //   ).then((value) =>
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MainScreen()),
-  //       )
-  //   );
-  // }
+  String attachmentId;
+  DeleteAttachmentDialog(this.attachmentId, {Key? key}) : super(key: key);
+
+  Future<dynamic> deleteAttachment() {
+    Map<String, String> map = new Map<String, String>();
+    map['attachment_id'] = attachmentId;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/attachment/delete',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +70,9 @@ class DeleteAttachmentDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        Navigator.of(context).pop();
+                        deleteAttachment().whenComplete(() => {
+                          Navigator.of(context).pop()
+                        });
                       },
                     ),
                   ],

@@ -27,7 +27,7 @@ class OpenCardDialog extends StatefulWidget {
 class _OpenCardDialogState extends State<OpenCardDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  List<String> list_of_attachments = [];
+  var list_of_attachments = [];
 
   var list_of_comments = [];
   String description = "";
@@ -53,11 +53,23 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
       setState(() {
         list_of_comments = resMap['comments'];
         description = resMap['description'];
-        list_of_attachments = resMap['attachments'].cast<String>();
+        list_of_attachments = resMap['attachments'];
+        card_date = (resMap['date']=="")?null:DateTime.parse(resMap['date']);
       })
     });
 
     return f;
+  }
+
+  void setDate(DateTime? date) {
+    Map<String, String> map = new Map<String, String>();
+    map['card_id'] = widget.cardId;
+    map['datetime'] = (date==null)?"":date.toIso8601String();
+
+    globals.Session.post(
+      'trello/workspace/boards/lists/cards/date',
+      map,
+    );
   }
 
   _selectDate(BuildContext context) async {
@@ -76,9 +88,9 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
     if (card_date != selectedDate) {
       setState(() {
         card_date = selectedDate;
+        setDate(selectedDate);
       });
     }
-    // print(card_date);
   }
 
   bool refresh = true;
@@ -196,6 +208,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                         onPressed: () {
                                           // TODO delete date
                                           setState(() {
+                                            setDate(null);
                                             card_date = null;
                                           });
                                         },
@@ -262,7 +275,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              list_of_attachments[index],
+                                              list_of_attachments[index][0],
                                               style: const TextStyle(color: darkGrey, fontSize: 15),
                                             ),
                                             const SizedBox(
@@ -285,7 +298,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                                     showDialog(
                                                         context: context,
                                                         builder: (BuildContext context) {
-                                                          return DeleteAttachmentDialog();
+                                                          return DeleteAttachmentDialog(list_of_attachments[index][1]);
                                                         });
                                                   },
                                                 ),

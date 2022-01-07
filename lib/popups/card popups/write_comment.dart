@@ -70,6 +70,7 @@ class WriteComment extends StatelessWidget {
                   ),
                 ),
                 TextField(
+                  controller: _comment,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: const InputDecoration(
