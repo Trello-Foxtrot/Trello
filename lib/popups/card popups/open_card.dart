@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:trello/popups/card%20popups/delete_comment.dart';
 import 'package:trello/popups/card%20popups/rename_card.dart';
 import 'package:trello/popups/card%20popups/write_comment.dart';
 import 'package:trello/utils/colors.dart';
+import 'package:path/path.dart';
 import 'package:trello/globals.dart' as globals;
 
 import 'change_description.dart';
@@ -72,8 +74,20 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
     );
   }
 
+  void addAttachment(PlatformFile file) {
+    Map<String, String> map = new Map<String, String>();
+    map['card_id'] = widget.cardId;
+    map['name'] = file.name;
+
+    //Uint8List? bytes = file.bytes;
+
+    globals.Session.post(
+      'trello/workspace/boards/lists/cards/attachment/add',
+      map,
+    );
+  }
+
   _selectDate(BuildContext context) async {
-    // TODO tutaj jest wybierana data
     if (card_date != null) {
       selectedDate = card_date!;
     } else {
@@ -206,7 +220,6 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                       IconButton(
                                         icon: const Icon(Icons.close, color: Colors.grey, size: 20),
                                         onPressed: () {
-                                          // TODO delete date
                                           setState(() {
                                             setDate(null);
                                             card_date = null;
@@ -524,16 +537,9 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // TODO - ATTACHMENT - FILE PICKER
-                          // TODO - to działa, teraz trzeba to obsłużyć
                           FilePickerResult? result = await FilePicker.platform.pickFiles();
                           if (result != null) {
-                            String? path = result.files.single.path;
-                            if (path != null) {
-                              File file = File(path);
-                            }
-                          } else {
-                            // User canceled the picker
+                              addAttachment(result.files.single);
                           }
                         },
                         child: const Padding(
