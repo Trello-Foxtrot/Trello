@@ -6,20 +6,19 @@ import 'package:trello/screens/main_screen.dart';
 import 'package:trello/globals.dart' as globals;
 
 class DeleteCommentDialog extends StatelessWidget {
-  // void deleteComment(BuildContext context) {
-  //   Map<String, dynamic> map = new Map<String, dynamic>();
-  //   map['id'] = globals.CurrentComment.id.toString();
-  //
-  //   http.post(
-  //     Uri.parse('http://localhost:8000/trello/Comment/delete'),
-  //     body: map,
-  //   ).then((value) =>
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const MainScreen()),
-  //       )
-  //   );
-  // }
+  String commentId;
+
+  DeleteCommentDialog(this.commentId, {Key? key}) : super(key: key);
+
+  Future<dynamic> deleteComment() {
+    Map<String, String> map = new Map<String, String>();
+    map['comment_id'] = commentId;
+
+    return globals.Session.post(
+      'trello/workspace/boards/lists/cards/comments/delete',
+      map,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +71,9 @@ class DeleteCommentDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        Navigator.of(context).pop();
+                        deleteComment().whenComplete(() =>
+                          Navigator.of(context).pop()
+                        );
                       },
                     ),
                   ],

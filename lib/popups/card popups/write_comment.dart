@@ -20,7 +20,7 @@ class WriteComment extends StatelessWidget {
     Map<String, String> map = new Map<String, String>();
 
     map['card_id'] = cardId;
-    map['new_comment'] = comment;
+    map['text'] = comment;
 
     return globals.Session.post(
       'trello/workspace/boards/lists/cards/comments/add',

@@ -29,7 +29,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
 
   List<String> list_of_attachments = [];
 
-  var list_of_comments;
+  var list_of_comments = [];
   String description = "";
 
   late DateTime selectedDate;
@@ -42,9 +42,10 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
 
   Future<dynamic> getCardData() {
     Map<String, String> map = new Map<String, String>();
+    map['card_id'] = widget.cardId;
 
     Future<dynamic> f = globals.Session.post(
-      'trello/workspace/boards/lists/cards/comments',
+      'trello/workspace/boards/lists/cards',
       map,
     );
 
@@ -52,7 +53,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
       setState(() {
         list_of_comments = resMap['comments'];
         description = resMap['description'];
-        list_of_attachments = resMap['attachments'];
+        list_of_attachments = resMap['attachments'].cast<String>();
       })
     });
 
@@ -78,6 +79,13 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
       });
     }
     // print(card_date);
+  }
+
+  bool refresh = true;
+  @override
+  void initState() {
+    if (refresh) getCardData().whenComplete(() => refresh=false);
+    super.initState();
   }
 
   @override
@@ -357,7 +365,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                                     showDialog(
                                                       context: context,
                                                       builder: (BuildContext context) {
-                                                        return DeleteCommentDialog();
+                                                        return DeleteCommentDialog(list_of_comments[index][2]);
                                                       },
                                                     );
                                                   },
