@@ -74,14 +74,14 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
     );
   }
 
-  void addAttachment(PlatformFile file) {
+  Future<dynamic> addAttachment(PlatformFile file) {
     Map<String, String> map = new Map<String, String>();
     map['card_id'] = widget.cardId;
     map['name'] = file.name;
 
     Uint8List? bytes = file.bytes;
 
-    globals.Session.postFile(
+    return globals.Session.postFile(
       'trello/workspace/boards/lists/cards/attachment/add',
       map, bytes!
     );
@@ -139,6 +139,8 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
         ),
         child: SafeArea(
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 flex: 2,
@@ -148,6 +150,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                       padding: const EdgeInsets.all(25),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(
                             height: 10,
@@ -539,7 +542,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                         onPressed: () async {
                           FilePickerResult? result = await FilePicker.platform.pickFiles();
                           if (result != null) {
-                              addAttachment(result.files.single);
+                              addAttachment(result.files.single).then((value) => getCardData());
                           }
                         },
                         child: const Padding(
