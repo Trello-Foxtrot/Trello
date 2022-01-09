@@ -79,11 +79,11 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
     map['card_id'] = widget.cardId;
     map['name'] = file.name;
 
-    //Uint8List? bytes = file.bytes;
+    Uint8List? bytes = file.bytes;
 
-    globals.Session.post(
+    globals.Session.postFile(
       'trello/workspace/boards/lists/cards/attachment/add',
-      map,
+      map, bytes!
     );
   }
 
