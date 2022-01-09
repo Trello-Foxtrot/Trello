@@ -93,11 +93,7 @@ class CreateCardDialog extends StatelessWidget {
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
                           addCard(_titleController.text).then((value) => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                              builder: (context) => BoardScreen()),
-                            )
+                            Navigator.of(context).pop()
                           });
                         }
                       },

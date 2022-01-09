@@ -8,11 +8,11 @@ class CreateWorkSpaceDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
 
-  void addWorkspace(String name) {
+  Future<dynamic> addWorkspace(String name) {
     Map<String, String> map = <String, String>{};
     map['name'] = name;
 
-    globals.Session.post(
+    return globals.Session.post(
       'trello/workspace/add',
       map
     );
@@ -86,12 +86,11 @@ class CreateWorkSpaceDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          addWorkspace(_titleController.text);
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MainScreen()),
-                          );
+                          addWorkspace(_titleController.text).then((value) => Navigator.of(context).pop());
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => MainScreen()),
+                          // );
                         }
                       },
                     ),

@@ -8,12 +8,12 @@ class CreateListDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
 
-   void addList(String name) {
+   Future<dynamic> addList(String name) {
      Map<String, String> map = new Map<String, String>();
      map['board_id'] = globals.CurrentBoard.id.toString();
      map['name'] = name;
 
-     globals.Session.post(
+     return globals.Session.post(
        'trello/workspace/boards/lists/add',
        map,
      );
@@ -87,11 +87,7 @@ class CreateListDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          addList(_titleController.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
-                          );
+                          addList(_titleController.text).then((value) => Navigator.of(context).pop());
                         }
                       },
                     ),

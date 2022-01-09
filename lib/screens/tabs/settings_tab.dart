@@ -29,7 +29,7 @@ class _SettingsTabState extends State<SettingsTab> {
                       context: context,
                       builder: (BuildContext context) {
                         return RenameWorkspaceDialog();
-                      });
+                      }).whenComplete(() => Navigator.of(context).pop());
                 },
                 text: "Change workspace name",
               ),
@@ -41,7 +41,7 @@ class _SettingsTabState extends State<SettingsTab> {
                       context: context,
                       builder: (BuildContext context) {
                         return DeleteWorkspaceDialog();
-                      });
+                      }).whenComplete(() => Navigator.of(context).pop());
                 },
                 bgColor: Colors.grey,
               ),

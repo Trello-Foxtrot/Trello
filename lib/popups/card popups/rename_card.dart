@@ -94,10 +94,7 @@ class RenameCardDialog extends StatelessWidget {
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
                           renameCard(_title.text).then((value) => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => BoardScreen()),
-                            )
+                              Navigator.of(context).pop()
                           });
                         }
                       },

@@ -71,10 +71,7 @@ class DeleteListDialog extends StatelessWidget {
                       text: "Delete",
                       onClick: () {
                         deleteList().then((value) => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
-                          )
+                            Navigator.of(context).pop()
                         });
                       },
                     ),

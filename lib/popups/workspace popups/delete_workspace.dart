@@ -6,18 +6,13 @@ import 'package:trello/globals.dart' as globals;
 
 class DeleteWorkspaceDialog extends StatelessWidget {
 
-  void deleteWorkspace(BuildContext context) {
+  Future<dynamic> deleteWorkspace() {
     Map<String, String> map = <String, String>{};
     map['workspace_id'] = globals.CurrentWorkspace.id.toString();
 
-    globals.Session.post(
+    return globals.Session.post(
       'trello/workspace/delete',
       map,
-    );
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 
@@ -72,7 +67,7 @@ class DeleteWorkspaceDialog extends StatelessWidget {
                     DialogBlueButton(
                       text: "Delete",
                       onClick: () {
-                        deleteWorkspace(context);
+                        deleteWorkspace().then((value) => Navigator.of(context).pop());
                       },
                     ),
                   ],

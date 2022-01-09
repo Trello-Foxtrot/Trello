@@ -54,7 +54,8 @@ class _BoardScreenState extends State<BoardScreen> {
 
     _contents = List.empty();
     updateBoardsListsAndCards().whenComplete(() {
-      _contents = List.generate(list_of_list.length, (index) => _buildList(index));
+      _contents =
+          List.generate(list_of_list.length, (index) => _buildList(index));
       _contents.add(DragAndDropList(
         header: Row(
           children: [
@@ -66,7 +67,7 @@ class _BoardScreenState extends State<BoardScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return CreateListDialog();
-                        });
+                        }).whenComplete(() => Navigator.of(context).pop(false));
                   });
                 },
                 child: Container(
@@ -74,7 +75,8 @@ class _BoardScreenState extends State<BoardScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     color: lightGrey,
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 20),
                   child: Row(
                     children: const [
                       Icon(
@@ -127,14 +129,13 @@ class _BoardScreenState extends State<BoardScreen> {
               color: Colors.white,
               padding: EdgeInsets.all(0),
               onSelected: (value) {
-                print(value);
                 if (value == "add") {
                   setState(() {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return CreateCardDialog(list_of_listId[outerIndex]);
-                        });
+                        }).whenComplete(() => Navigator.of(context).pop(false));
                   });
                 }
                 if (value == "delete") {
@@ -143,7 +144,7 @@ class _BoardScreenState extends State<BoardScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return DeleteListDialog(list_of_listId[outerIndex]);
-                        });
+                        }).whenComplete(() => Navigator.of(context).pop(false));
                   });
                 }
                 if (value == "rename") {
@@ -152,7 +153,7 @@ class _BoardScreenState extends State<BoardScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return RenameListDialog(list_of_listId[outerIndex]);
-                        });
+                        }).whenComplete(() => Navigator.of(context).pop(false));
                   });
                 }
               },
@@ -201,7 +202,7 @@ class _BoardScreenState extends State<BoardScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return CreateCardDialog(list_of_listId[outerIndex]);
-                      });
+                      }).whenComplete(() => Navigator.of(context).pop(false));
                 });
               },
               child: Container(
@@ -259,7 +260,7 @@ class _BoardScreenState extends State<BoardScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return OpenCardDialog(cardId, text);
-                    });
+                    }).whenComplete(() => Navigator.of(context).pop(false));
               });
             },
             child: Container(
@@ -344,7 +345,7 @@ class _BoardScreenState extends State<BoardScreen> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return RenameBoardDialog();
-                                });
+                                }).whenComplete(() => Navigator.of(context).pop(false));
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(3.0),
@@ -370,7 +371,7 @@ class _BoardScreenState extends State<BoardScreen> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return DeleteBoardDialog();
-                                });
+                                }).whenComplete(() => Navigator.of(context).pop(true));
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(3.0),

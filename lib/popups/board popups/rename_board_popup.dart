@@ -91,10 +91,11 @@ class RenameBoardDialog extends StatelessWidget {
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
                           renameBoard(_title.text).then((value) => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => BoardScreen()),
-                            )
+                            Navigator.of(context).pop()
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => BoardScreen()),
+                            // )
                           });
                         }
                       },

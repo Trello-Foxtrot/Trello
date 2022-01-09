@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:trello/buttons/add_button.dart';
 import 'package:trello/buttons/board_button.dart';
@@ -33,6 +35,17 @@ class _BoardsTabState extends State<BoardsTab> {
     });
   }
 
+  void goToBoard() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => BoardScreen()),
+    ).then((value) => {
+        if(value==false)
+          goToBoard()
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,7 +66,7 @@ class _BoardsTabState extends State<BoardsTab> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return CreateBoardDialog();
-                                  });
+                                  }).whenComplete(() => updateBoards());
                             },
                           ))
                   : List.generate(boardsList.length + 1, (index) {
@@ -64,10 +77,7 @@ class _BoardsTabState extends State<BoardsTab> {
                             globals.CurrentBoard.id = int.parse(boardsIdList[index]);
                             globals.CurrentBoard.title = boardsList[index];
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => BoardScreen()),
-                            );
+                            goToBoard();
                           },
                         );
                       } else {
@@ -77,7 +87,7 @@ class _BoardsTabState extends State<BoardsTab> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return CreateBoardDialog();
-                                });
+                                }).whenComplete(() => updateBoards());
                           },
                         );
                       }

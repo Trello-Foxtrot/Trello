@@ -68,6 +68,7 @@ class ChangeDescriptionDialog extends StatelessWidget {
                   ),
                 ),
                 TextField(
+                  controller: _title,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: const InputDecoration(
@@ -88,8 +89,7 @@ class ChangeDescriptionDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          setDescription(_title.text);
-                          Navigator.of(context).pop();
+                          setDescription(_title.text).then((value) => Navigator.of(context).pop());
                         }
                       },
                     ),

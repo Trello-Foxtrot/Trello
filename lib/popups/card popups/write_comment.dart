@@ -91,8 +91,7 @@ class WriteComment extends StatelessWidget {
                       text: "Send",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          addComment(_comment.text);
-                          Navigator.of(context).pop();
+                          addComment(_comment.text).then((value) => Navigator.of(context).pop());
                         }
                       },
                     ),

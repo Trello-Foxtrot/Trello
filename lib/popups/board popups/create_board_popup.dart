@@ -8,12 +8,12 @@ class CreateBoardDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
 
-  void addBoard() {
+  Future<dynamic> addBoard() {
     Map<String, String> map = <String, String>{};
     map['workspace_id'] = globals.CurrentWorkspace.id.toString();
     map['name'] = _titleController.text;
 
-    globals.Session.post(
+    return globals.Session.post(
       'trello/workspace/boards/add',
       map,
     );
@@ -87,11 +87,11 @@ class CreateBoardDialog extends StatelessWidget {
                       text: "Create",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          addBoard();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => WorkspaceScreen()),
-                          );
+                          addBoard().then((value) => Navigator.of(context).pop());
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => WorkspaceScreen()),
+                          // );
                         }
                       },
                     ),

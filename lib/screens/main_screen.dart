@@ -90,7 +90,7 @@ class _MainScreenState extends State<MainScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return CreateWorkSpaceDialog();
-                                    });
+                                    }).whenComplete(() => updateWorkspacesLists());
                               },
                             ))
                     : List.generate(myWorkSpacesList.length + 1, (index) {
@@ -106,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => WorkspaceScreen()
                                 ),
-                              );
+                              ).whenComplete(() => updateWorkspacesLists());
                             },
                           );
                         } else {
@@ -116,7 +116,7 @@ class _MainScreenState extends State<MainScreen> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return CreateWorkSpaceDialog();
-                                  });
+                                  }).whenComplete(() => updateWorkspacesLists());
                             },
                           );
                         }
@@ -148,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
                         MaterialPageRoute(
                             builder: (context) => WorkspaceScreen()
                         ),
-                      );
+                      ).whenComplete(() => updateWorkspacesLists());
                     },
                   );
                 }),

@@ -8,13 +8,13 @@ class RenameWorkspaceDialog extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _title = TextEditingController();
 
-  void renameWorkspace(String name) {
+  Future<dynamic> renameWorkspace(String name) {
     Map<String, String> map = <String, String>{};
     map['workspace_id'] = globals.CurrentWorkspace.id.toString();
     map['new_name'] = name;
     globals.CurrentWorkspace.title = name;
 
-    globals.Session.post(
+    return globals.Session.post(
       'trello/workspace/rename',
       map,
     );
@@ -88,11 +88,7 @@ class RenameWorkspaceDialog extends StatelessWidget {
                       text: "Change",
                       onClick: () {
                         if (_formKey.currentState!.validate()) {
-                          renameWorkspace(_title.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => WorkspaceScreen()),
-                          );
+                          renameWorkspace(_title.text).then((value) => Navigator.of(context).pop());
                         }
                       },
                     ),

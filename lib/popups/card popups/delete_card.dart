@@ -71,10 +71,7 @@ class DeleteCardDialog extends StatelessWidget {
                       text: "Delete",
                       onClick: () {
                         deleteCard().then((value) => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BoardScreen()),
-                          )
+                          Navigator.of(context).pop()
                         });
                       },
                     ),

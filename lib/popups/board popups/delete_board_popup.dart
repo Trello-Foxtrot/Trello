@@ -70,10 +70,11 @@ class DeleteBoardDialog extends StatelessWidget {
                       text: "Delete",
                       onClick: () {
                         deleteBoard().then((value) => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => WorkspaceScreen()),
-                          )
+                          Navigator.of(context).pop()
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => WorkspaceScreen()),
+                          // )
                         });
                       },
                     ),

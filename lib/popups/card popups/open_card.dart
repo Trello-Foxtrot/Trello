@@ -312,7 +312,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                                         context: context,
                                                         builder: (BuildContext context) {
                                                           return DeleteAttachmentDialog(list_of_attachments[index][1]);
-                                                        });
+                                                        }).whenComplete(() => getCardData());
                                                   },
                                                 ),
                                               ],
@@ -393,7 +393,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                                                       builder: (BuildContext context) {
                                                         return DeleteCommentDialog(list_of_comments[index][2]);
                                                       },
-                                                    );
+                                                    ).whenComplete(() => getCardData());
                                                   },
                                                 ),
                                               ],
@@ -443,7 +443,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                               context: context,
                               builder: (BuildContext context) {
                                 return DeleteCardDialog(widget.cardId);
-                              });
+                              }).whenComplete(() => Navigator.of(context).pop());
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -469,7 +469,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                               context: context,
                               builder: (BuildContext context) {
                                 return RenameCardDialog(widget.cardId);
-                              });
+                              }).whenComplete(() => getCardData());
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -495,7 +495,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                               context: context,
                               builder: (BuildContext context) {
                                 return ChangeDescriptionDialog(widget.cardId);
-                              });
+                              }).whenComplete(() => getCardData());
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -566,7 +566,7 @@ class _OpenCardDialogState extends State<OpenCardDialog> {
                               context: context,
                               builder: (BuildContext context) {
                                 return WriteComment(widget.cardId);
-                              });
+                              }).whenComplete(() => getCardData());
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),

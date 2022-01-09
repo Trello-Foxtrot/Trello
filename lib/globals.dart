@@ -36,13 +36,15 @@ class Session {
         body: jsonEncode(body)
     );
 
-    Map<String, dynamic> data = jsonDecode(res.body);
+    Map<String, dynamic> data = <String, dynamic>{};
+    if(res.body.isNotEmpty) {
+      data = jsonDecode(res.body);
+    }
     return data;
   }
 
   static Future<dynamic> postFile(String url, Map<String, String> body, Uint8List bytes) {
     body.addAll({'file': base64Encode(bytes)});
-    print(body);
     return post(url, body);
   }
 }
